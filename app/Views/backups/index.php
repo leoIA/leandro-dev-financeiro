@@ -26,7 +26,7 @@ function formatBytes($bytes) {
                 <h5 class="mb-1">Backup Manual</h5>
                 <p class="text-muted small mb-0">Gere um arquivo SQL completo do banco de dados agora.</p>
             </div>
-            <form method="post" action="/backups/gerar" class="d-inline">
+            <form method="post" action="index.php?route=backups/gerar" class="d-inline">
                 <?= App\Core\Csrf::field() ?>
                 <button type="submit" class="btn btn-primary" data-confirm="Gerar um novo backup agora?">
                     <i class="bi bi-database-add"></i> Gerar Backup Agora
@@ -68,7 +68,7 @@ function formatBytes($bytes) {
                                         ?>
                                     </td>
                                     <td class="text-center no-print">
-                                        <a href="/backups/<?= urlencode($b['arquivo'] ?? $b['nome'] ?? '') ?>/download"
+                                        <a href="index.php?route=backups/<?= urlencode($b['arquivo'] ?? $b['nome'] ?? '') ?>/download"
                                            class="btn btn-sm btn-outline-primary" title="Download" data-confirm="Baixar este arquivo?">
                                             <i class="bi bi-download"></i>
                                         </a>
@@ -77,7 +77,7 @@ function formatBytes($bytes) {
                                                 data-arquivo="<?= htmlspecialchars($b['arquivo'] ?? $b['nome'] ?? '', ENT_QUOTES, 'UTF-8') ?>">
                                             <i class="bi bi-arrow-counterclockwise"></i>
                                         </button>
-                                        <form method="post" action="/backups/<?= urlencode($b['arquivo'] ?? $b['nome'] ?? '') ?>/excluir" class="d-inline">
+                                        <form method="post" action="index.php?route=backups/<?= urlencode($b['arquivo'] ?? $b['nome'] ?? '') ?>/excluir" class="d-inline">
                                             <?= App\Core\Csrf::field() ?>
                                             <button type="submit" class="btn btn-sm btn-outline-danger" title="Excluir"
                                                     data-confirm="Excluir este backup permanentemente?">
@@ -111,7 +111,7 @@ function formatBytes($bytes) {
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <form method="post" action="/backups/restaurar" id="formRestore">
+                <form method="post" action="index.php?route=backups/restaurar" id="formRestore">
                     <?= App\Core\Csrf::field() ?>
                     <input type="hidden" name="arquivo" id="restoreArquivoInput" value="">
                     <button type="submit" class="btn btn-warning" id="btnRestoreConfirm" disabled>

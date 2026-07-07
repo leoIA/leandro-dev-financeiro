@@ -10,14 +10,22 @@ declare(strict_types=1);
  * @brief   Destroi sessão e redireciona para login
  */
 
-session_start();
+// CORREÇÃO BUG #1: Carregar App::boot() PRIMEIRO (define nome do cookie LEANDRODEVSESSID),
+// só então acessar $_SESSION. Se session_start() antes do App::boot(), a sessão
+// seria iniciada com PHPSESSID e user_id estaria no cookie errado.
+$appLoaded = false;
+if (file_exists(__DIR__ . '/config.php')) {
+    require_once __DIR__ . '/config.php';
+    require_once __DIR__ . '/app/Core/App.php';
+    App\Core\App::boot();
+    $appLoaded = true;
+} else {
+    session_start();
+}
 
 // Log auditoria se possível
-if (file_exists(__DIR__ . '/config.php') && isset($_SESSION['user_id'])) {
+if ($appLoaded && isset($_SESSION['user_id'])) {
     try {
-        require_once __DIR__ . '/config.php';
-        require_once __DIR__ . '/app/Core/App.php';
-        App\Core\App::boot();
         $pdo = App\Core\Database::getInstance();
         $stmt = $pdo->prepare("INSERT INTO logs_auditoria (usuario_id, acao, modulo, ip, user_agent) VALUES (?, 'LOGOUT', 'auth', ?, ?)");
         $stmt->execute([
@@ -33,9 +41,11 @@ if (file_exists(__DIR__ . '/config.php') && isset($_SESSION['user_id'])) {
 $_SESSION = [];
 if (ini_get('session.use_cookies')) {
     $params = session_get_cookie_params();
-    setcookie(session_name(), '', time() - 42000, $params['path'], $params['domain'], $params['secure'], $params['httponly']);
+    setcookie(session_name(), '', time() - 42000, $params['path'], $params['domain'] ?? '', $params['secure'] ?? false, $params['httponly'] ?? false);
 }
-session_destroy();
+if (session_status() === PHP_SESSION_ACTIVE) {
+    session_destroy();
+}
 
 header('Location: login.php?logout=1');
 exit;

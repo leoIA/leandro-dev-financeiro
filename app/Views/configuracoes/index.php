@@ -41,7 +41,7 @@ $logoPath = $g('empresa_logo_path');
 
                 <!-- EMPRESA -->
                 <div class="tab-pane fade show active" id="pnl-empresa" role="tabpanel">
-                    <form method="post" action="/configuracoes/empresa" enctype="multipart/form-data" class="needs-validation" novalidate>
+                    <form method="post" action="index.php?route=configuracoes/empresa" enctype="multipart/form-data" class="needs-validation" novalidate>
                         <?= App\Core\Csrf::field() ?>
                         <div class="row g-3">
                             <div class="col-md-6">
@@ -125,7 +125,7 @@ $logoPath = $g('empresa_logo_path');
 
                 <!-- SEGURANÇA -->
                 <div class="tab-pane fade" id="pnl-seguranca" role="tabpanel">
-                    <form method="post" action="/configuracoes/seguranca" class="needs-validation" novalidate>
+                    <form method="post" action="index.php?route=configuracoes/seguranca" class="needs-validation" novalidate>
                         <?= App\Core\Csrf::field() ?>
                         <div class="row g-3">
                             <div class="col-md-4">
@@ -156,7 +156,7 @@ $logoPath = $g('empresa_logo_path');
 
                 <!-- BACKUP -->
                 <div class="tab-pane fade" id="pnl-backup" role="tabpanel">
-                    <form method="post" action="/configuracoes/backup" class="needs-validation" novalidate>
+                    <form method="post" action="index.php?route=configuracoes/backup" class="needs-validation" novalidate>
                         <?= App\Core\Csrf::field() ?>
                         <div class="row g-3">
                             <div class="col-md-4">
@@ -188,7 +188,7 @@ $logoPath = $g('empresa_logo_path');
 
                 <!-- SISTEMA -->
                 <div class="tab-pane fade" id="pnl-sistema" role="tabpanel">
-                    <form method="post" action="/configuracoes/sistema" class="needs-validation" novalidate>
+                    <form method="post" action="index.php?route=configuracoes/sistema" class="needs-validation" novalidate>
                         <?= App\Core\Csrf::field() ?>
                         <div class="row g-3">
                             <div class="col-md-3">
@@ -221,7 +221,7 @@ $logoPath = $g('empresa_logo_path');
 
             <hr>
             <div class="d-flex justify-content-between align-items-center">
-                <form method="post" action="/configuracoes/restaurar-padroes" class="d-inline" id="formReset">
+                <form method="post" action="index.php?route=configuracoes/restaurar-padroes" class="d-inline" id="formReset">
                     <?= App\Core\Csrf::field() ?>
                     <button type="button" class="btn btn-outline-danger" id="btnRestaurar">
                         <i class="bi bi-arrow-counterclockwise"></i> Restaurar Padrões

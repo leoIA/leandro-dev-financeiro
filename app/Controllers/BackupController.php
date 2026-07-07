@@ -103,7 +103,7 @@ class BackupController
 
         if (!Csrf::verify((string) Request::post('_csrf', ''))) {
             Flash::error('Token CSRF inválido.');
-            Response::redirect('/backups');
+            Response::redirect('index.php?route=backups');
         }
 
         $fileName = 'backup_' . date('Ymd_His') . '.sql';
@@ -130,7 +130,7 @@ class BackupController
 
         if (!$ok) {
             Flash::error('Falha ao gerar backup: ' . (string) $errorMsg);
-            Response::redirect('/backups');
+            Response::redirect('index.php?route=backups');
         }
 
         // Limpa mantendo apenas os N últimos.
@@ -144,7 +144,7 @@ class BackupController
         }
 
         Flash::success('Backup gerado com sucesso: ' . $fileName);
-        Response::redirect('/backups');
+        Response::redirect('index.php?route=backups');
     }
 
     /**
@@ -161,7 +161,7 @@ class BackupController
         $safe = $this->safeguardFilename($filename);
         if ($safe === null) {
             Flash::error('Nome de arquivo inválido.');
-            Response::redirect('/backups');
+            Response::redirect('index.php?route=backups');
         }
 
         $path = $this->backupDir . '/' . $safe;
@@ -183,26 +183,26 @@ class BackupController
 
         if (!Csrf::verify((string) Request::post('_csrf', ''))) {
             Flash::error('Token CSRF inválido.');
-            Response::redirect('/backups');
+            Response::redirect('index.php?route=backups');
         }
 
         $filename = (string) Request::post('arquivo', '');
         $safe = $this->safeguardFilename($filename);
         if ($safe === null) {
             Flash::error('Nome de arquivo inválido.');
-            Response::redirect('/backups');
+            Response::redirect('index.php?route=backups');
         }
 
         $path = $this->backupDir . '/' . $safe;
         if (!is_file($path)) {
             Flash::error('Backup não encontrado: ' . $safe);
-            Response::redirect('/backups');
+            Response::redirect('index.php?route=backups');
         }
 
         $sql = file_get_contents($path);
         if ($sql === false || $sql === '') {
             Flash::error('Arquivo de backup vazio ou ilegível.');
-            Response::redirect('/backups');
+            Response::redirect('index.php?route=backups');
         }
 
         try {
@@ -220,7 +220,7 @@ class BackupController
             \App\Core\Logger::error('Falha ao restaurar backup: ' . $e->getMessage());
             Flash::error('Erro ao restaurar backup: ' . $e->getMessage());
         }
-        Response::redirect('/backups');
+        Response::redirect('index.php?route=backups');
     }
 
     /**
@@ -236,24 +236,24 @@ class BackupController
 
         if (!Csrf::verify((string) Request::post('_csrf', ''))) {
             Flash::error('Token CSRF inválido.');
-            Response::redirect('/backups');
+            Response::redirect('index.php?route=backups');
         }
 
         $safe = $this->safeguardFilename($filename);
         if ($safe === null) {
             Flash::error('Nome de arquivo inválido.');
-            Response::redirect('/backups');
+            Response::redirect('index.php?route=backups');
         }
 
         $path = $this->backupDir . '/' . $safe;
         if (!is_file($path)) {
             Flash::error('Backup não encontrado.');
-            Response::redirect('/backups');
+            Response::redirect('index.php?route=backups');
         }
 
         if (!@unlink($path)) {
             Flash::error('Falha ao excluir o arquivo de backup.');
-            Response::redirect('/backups');
+            Response::redirect('index.php?route=backups');
         }
 
         try {
@@ -263,7 +263,7 @@ class BackupController
         }
 
         Flash::success('Backup excluído com sucesso.');
-        Response::redirect('/backups');
+        Response::redirect('index.php?route=backups');
     }
 
     // -----------------------------------------------------------------

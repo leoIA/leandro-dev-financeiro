@@ -39,7 +39,7 @@ $ultima = !empty($user['ultimo_acesso']) ? Format::datetimeBR($user['ultimo_aces
 
             <nav aria-label="breadcrumb" class="d-none d-md-block">
                 <ol class="breadcrumb mb-0">
-                    <li class="breadcrumb-item"><a href="/dashboard">Início</a></li>
+                    <li class="breadcrumb-item"><a href="index.php?route=dashboard">Início</a></li>
                     <li class="breadcrumb-item active" aria-current="page"><?= htmlspecialchars($pageTitle, ENT_QUOTES, 'UTF-8') ?></li>
                 </ol>
             </nav>
@@ -70,8 +70,8 @@ $ultima = !empty($user['ultimo_acesso']) ? Format::datetimeBR($user['ultimo_aces
                         </li>
                         <li><span class="dropdown-item-text small text-muted">Último acesso: <?= $ultima ?></span></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="/perfil"><i class="bi bi-person me-2"></i>Meu Perfil</a></li>
-                        <li><a class="dropdown-item text-danger" href="/logout.php"><i class="bi bi-box-arrow-right me-2"></i>Sair</a></li>
+                        <li><a class="dropdown-item" href="index.php?route=perfil"><i class="bi bi-person me-2"></i>Meu Perfil</a></li>
+                        <li><a class="dropdown-item text-danger" href="logout.php"><i class="bi bi-box-arrow-right me-2"></i>Sair</a></li>
                     </ul>
                 </div>
             </div>

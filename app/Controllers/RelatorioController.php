@@ -42,7 +42,7 @@ class RelatorioController
     public function index(): void
     {
         Auth::require('relatorios', 'read');
-        Response::redirect('/relatorios/fluxo-caixa');
+        Response::redirect('index.php?route=relatorios/fluxo-caixa');
     }
 
     /**

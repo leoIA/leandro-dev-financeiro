@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  phpunit.xml — configuração do PHPUnit para o módulo NFSe.
+
+  Uso:
+    composer dev  # instala phpunit em vendor/
+    vendor/bin/phpunit                    # roda todos os testes em tests/Nfse
+    vendor/bin/phpunit tests/Nfse         # roda apenas testes do módulo NFSe
+    vendor/bin/phpunit --testdox          # saída legível
+
+  Alternativa sem composer (PHPUnit global):
+    phpunit -c phpunit.xml
+
+  Bootstrap: app/Core/App.php (registra autoloader PSR-4 do App\, define
+  timezone, encoding e handlers de erro). App::boot() é idempotente.
+
+  Os testes NÃO dependem de DB real (usam mocks para qualquer acesso a DB)
+  e NÃO fazem HTTP real para prefeituras (usam mock HTTP server local OU
+  createMock para a interface NfseAdapterInterface).
+
+  O script E2E (tests/E2E/mock_homologacao.php) é standalone — não usa
+  este phpunit.xml; roda diretamente via `php tests/E2E/mock_homologacao.php`.
+-->
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
+         bootstrap="app/Core/App.php"
+         colors="true"
+         cacheDirectory=".phpunit.cache"
+         beStrictAboutTestsThatDoNotTestAnything="true"
+         beStrictAboutOutputDuringTests="true"
+         failOnRisky="true"
+         failOnWarning="true">
+    <testsuites>
+        <testsuite name="NFSe">
+            <directory>tests/Nfse</directory>
+        </testsuite>
+    </testsuites>
+    <source>
+        <directory>app</directory>
+    </source>
+    <php>
+        <!-- Sinaliza aos testes que estão rodando em ambiente de testes. -->
+        <env name="APP_ENV" value="testing"/>
+        <!-- Desabilita chamadas HTTP reais (testes usam mocks). -->
+        <env name="NFSE_DISABLE_REAL_HTTP" value="1"/>
+    </php>
+</phpunit>

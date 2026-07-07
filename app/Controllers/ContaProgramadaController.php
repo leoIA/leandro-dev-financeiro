@@ -58,7 +58,7 @@ class ContaProgramadaController
             return;
         }
         if ($id !== '') {
-            Response::redirect('/contas-programadas/' . urlencode($id) . '/editar');
+            Response::redirect('index.php?route=contas-programadas/' . urlencode($id) . '/editar');
             return;
         }
 
@@ -100,7 +100,7 @@ class ContaProgramadaController
 
         if (!Csrf::verify((string) Request::post('_csrf', ''))) {
             Flash::error('Token CSRF inválido.');
-            Response::redirect('/contas-programadas/novo');
+            Response::redirect('index.php?route=contas-programadas/novo');
         }
 
         $data = $this->collectFromRequest();
@@ -120,7 +120,7 @@ class ContaProgramadaController
         try {
             (new ContaProgramada())->create($data);
             Flash::success('Programação criada com sucesso.');
-            Response::redirect('/contas-programadas');
+            Response::redirect('index.php?route=contas-programadas');
         } catch (\Throwable $e) {
             \App\Core\Logger::error('Falha ao criar programação: ' . $e->getMessage());
             Flash::error('Erro ao criar programação: ' . $e->getMessage());
@@ -151,7 +151,7 @@ class ContaProgramadaController
 
         if ($programada === null) {
             Flash::error('Programação não encontrada.');
-            Response::redirect('/contas-programadas');
+            Response::redirect('index.php?route=contas-programadas');
         }
 
         $contas = (new Conta())->ativas();
@@ -172,7 +172,7 @@ class ContaProgramadaController
 
         if (!Csrf::verify((string) Request::post('_csrf', ''))) {
             Flash::error('Token CSRF inválido.');
-            Response::redirect('/contas-programadas/' . $id . '/editar');
+            Response::redirect('index.php?route=contas-programadas/' . $id . '/editar');
         }
 
         $data = $this->collectFromRequest();
@@ -203,7 +203,7 @@ class ContaProgramadaController
         try {
             $cpModel->update((int) $id, $update);
             Flash::success('Programação atualizada com sucesso.');
-            Response::redirect('/contas-programadas');
+            Response::redirect('index.php?route=contas-programadas');
         } catch (\Throwable $e) {
             \App\Core\Logger::error('Falha ao atualizar programação: ' . $e->getMessage());
             Flash::error('Erro ao atualizar programação: ' . $e->getMessage());
@@ -231,7 +231,7 @@ class ContaProgramadaController
 
         if (!Csrf::verify((string) Request::post('_csrf', ''))) {
             Flash::error('Token CSRF inválido.');
-            Response::redirect('/contas-programadas');
+            Response::redirect('index.php?route=contas-programadas');
         }
 
         try {
@@ -241,7 +241,7 @@ class ContaProgramadaController
             \App\Core\Logger::error('Falha ao desativar programação: ' . $e->getMessage());
             Flash::error('Erro ao desativar programação.');
         }
-        Response::redirect('/contas-programadas');
+        Response::redirect('index.php?route=contas-programadas');
     }
 
     /**
@@ -257,7 +257,7 @@ class ContaProgramadaController
         // Tolerante a GET (link na view) — CSRF só em POST.
         if (Request::isPost() && !Csrf::verify((string) Request::post('_csrf', ''))) {
             Flash::error('Token CSRF inválido.');
-            Response::redirect('/contas-programadas');
+            Response::redirect('index.php?route=contas-programadas');
         }
 
         try {
@@ -271,7 +271,7 @@ class ContaProgramadaController
             \App\Core\Logger::error('Falha ao gerar pendentes: ' . $e->getMessage());
             Flash::error('Erro ao gerar pendentes: ' . $e->getMessage());
         }
-        Response::redirect('/contas-programadas');
+        Response::redirect('index.php?route=contas-programadas');
     }
 
     // -----------------------------------------------------------------

@@ -46,7 +46,7 @@ $val = function($field, $default = '') use ($u, $old) {
         <div class="col-md-9">
             <div class="card shadow-sm">
                 <div class="card-body">
-                    <form method="post" action="/perfil" class="needs-validation" novalidate enctype="multipart/form-data">
+                    <form method="post" action="index.php?route=perfil" class="needs-validation" novalidate enctype="multipart/form-data">
                         <?= App\Core\Csrf::field() ?>
                         <input type="hidden" name="_method" value="PUT">
 
@@ -90,7 +90,7 @@ $val = function($field, $default = '') use ($u, $old) {
 
                         <hr>
                         <div class="d-flex justify-content-end gap-2">
-                            <a href="/dashboard" class="btn btn-outline-secondary">Cancelar</a>
+                            <a href="index.php?route=dashboard" class="btn btn-outline-secondary">Cancelar</a>
                             <button type="submit" class="btn btn-primary">
                                 <i class="bi bi-save"></i> Salvar
                             </button>

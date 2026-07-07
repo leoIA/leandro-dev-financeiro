@@ -15,9 +15,20 @@ $flashMessages = Flash::get();
 ?>
     <footer class="bg-dark text-light py-3 mt-5">
         <div class="container-fluid">
-            <div class="d-flex justify-content-between flex-wrap gap-2">
-                <span class="small">Copyright © 2026 Leandro DEV — MM Construtora. Todos os direitos reservados.</span>
-                <span class="small text-muted">v1.0.0</span>
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
+                <div class="d-flex flex-column flex-md-row align-items-center gap-2">
+                    <span class="small">Copyright © 2026 Leandro DEV — MM Construtora. Todos os direitos reservados.</span>
+                    <span class="small text-muted">v1.0.0</span>
+                </div>
+                <div class="small">
+                    <a href="mailto:leog3@live.com" class="text-light text-decoration-none">
+                        <i class="bi bi-envelope me-1"></i>leog3@live.com
+                    </a>
+                    <span class="mx-2">|</span>
+                    <a href="https://wa.me/5571991782319" target="_blank" rel="noopener" class="text-light text-decoration-none">
+                        <i class="bi bi-whatsapp me-1"></i>(71) 99178-2319
+                    </a>
+                </div>
             </div>
         </div>
     </footer>
@@ -53,10 +64,10 @@ $flashMessages = Flash::get();
 <script src="https://cdn.jsdelivr.net/npm/datatables.net@1.13.7/js/dataTables.bootstrap5.min.js"></script>
 
 <!-- JS local -->
-<script src="/public/js/app.js"></script>
-<script src="/public/js/mask.js"></script>
+<script src="public/js/app.js"></script>
+<script src="public/js/mask.js"></script>
 <?php if (isset($useViacep) && $useViacep === true): ?>
-    <script src="/public/js/viacep.js"></script>
+    <script src="public/js/viacep.js"></script>
 <?php endif; ?>
 
 </body>

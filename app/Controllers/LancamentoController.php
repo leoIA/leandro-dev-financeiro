@@ -63,7 +63,7 @@ class LancamentoController
             return;
         }
         if ($id !== '') {
-            Response::redirect('/lancamentos/' . urlencode($id) . '/editar');
+            Response::redirect('index.php?route=lancamentos/' . urlencode($id) . '/editar');
             return;
         }
 
@@ -148,7 +148,7 @@ class LancamentoController
 
         if (!Csrf::verify((string) Request::post('_csrf', ''))) {
             Flash::error('Token CSRF inválido.');
-            Response::redirect('/lancamentos/novo');
+            Response::redirect('index.php?route=lancamentos/novo');
         }
 
         $data = $this->collectFromRequest();
@@ -173,7 +173,7 @@ class LancamentoController
         try {
             (new Lancamento())->create($insert);
             Flash::success('Lançamento criado com sucesso.');
-            Response::redirect('/lancamentos');
+            Response::redirect('index.php?route=lancamentos');
         } catch (\Throwable $e) {
             \App\Core\Logger::error('Falha ao criar lançamento: ' . $e->getMessage());
             Flash::error('Erro ao criar lançamento: ' . $e->getMessage());
@@ -204,7 +204,7 @@ class LancamentoController
 
         if ($lancamento === null) {
             Flash::error('Lançamento não encontrado.');
-            Response::redirect('/lancamentos');
+            Response::redirect('index.php?route=lancamentos');
         }
 
         $contas = (new Conta())->ativas();
@@ -235,14 +235,14 @@ class LancamentoController
 
         if (!Csrf::verify((string) Request::post('_csrf', ''))) {
             Flash::error('Token CSRF inválido.');
-            Response::redirect('/lancamentos/' . $id . '/editar');
+            Response::redirect('index.php?route=lancamentos/' . $id . '/editar');
         }
 
         $status = (string) ($lancamento['status'] ?? 'PENDENTE');
 
         if ($status === 'CANCELADO') {
             Flash::error('Lançamento CANCELADO não pode ser editado.');
-            Response::redirect('/lancamentos/' . $id . '/editar');
+            Response::redirect('index.php?route=lancamentos/' . $id . '/editar');
         }
 
         // Se PAGO: preserva tipo/valor/conta/plano/data_lancamento/data_vencimento/forma_pagamento/documento/descricao.
@@ -270,7 +270,7 @@ class LancamentoController
         try {
             $lancamentoModel->update((int) $id, $update);
             Flash::success('Lançamento atualizado com sucesso.');
-            Response::redirect('/lancamentos');
+            Response::redirect('index.php?route=lancamentos');
         } catch (\Throwable $e) {
             \App\Core\Logger::error('Falha ao atualizar lançamento: ' . $e->getMessage());
             Flash::error('Erro ao atualizar lançamento: ' . $e->getMessage());
@@ -298,7 +298,7 @@ class LancamentoController
 
         if (!Csrf::verify((string) Request::post('_csrf', ''))) {
             Flash::error('Token CSRF inválido.');
-            Response::redirect('/lancamentos');
+            Response::redirect('index.php?route=lancamentos');
         }
 
         try {
@@ -312,7 +312,7 @@ class LancamentoController
             \App\Core\Logger::error('Falha ao marcar lançamento como pago: ' . $e->getMessage());
             Flash::error('Erro ao marcar lançamento como pago.');
         }
-        Response::redirect('/lancamentos');
+        Response::redirect('index.php?route=lancamentos');
     }
 
     /**
@@ -328,7 +328,7 @@ class LancamentoController
 
         if (!Csrf::verify((string) Request::post('_csrf', ''))) {
             Flash::error('Token CSRF inválido.');
-            Response::redirect('/lancamentos');
+            Response::redirect('index.php?route=lancamentos');
         }
 
         try {
@@ -342,7 +342,7 @@ class LancamentoController
             \App\Core\Logger::error('Falha ao estornar lançamento: ' . $e->getMessage());
             Flash::error('Erro ao estornar lançamento.');
         }
-        Response::redirect('/lancamentos');
+        Response::redirect('index.php?route=lancamentos');
     }
 
     /**
@@ -358,13 +358,13 @@ class LancamentoController
 
         if (!Csrf::verify((string) Request::post('_csrf', ''))) {
             Flash::error('Token CSRF inválido.');
-            Response::redirect('/lancamentos');
+            Response::redirect('index.php?route=lancamentos');
         }
 
         $motivo = trim((string) Request::post('motivo', ''));
         if ($motivo === '') {
             Flash::error('Motivo do cancelamento é obrigatório.');
-            Response::redirect('/lancamentos/' . $id . '/editar');
+            Response::redirect('index.php?route=lancamentos/' . $id . '/editar');
         }
 
         try {
@@ -378,7 +378,7 @@ class LancamentoController
             \App\Core\Logger::error('Falha ao cancelar lançamento: ' . $e->getMessage());
             Flash::error('Erro ao cancelar lançamento.');
         }
-        Response::redirect('/lancamentos');
+        Response::redirect('index.php?route=lancamentos');
     }
 
     /**

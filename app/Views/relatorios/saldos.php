@@ -18,7 +18,7 @@ $porPlano = $porPlano ?? [];
 
     <div class="card shadow-sm mb-3 no-print">
         <div class="card-body">
-            <form method="get" action="/relatorios/saldos" class="row g-2 align-items-end">
+            <form method="get" action="index.php?route=relatorios/saldos" class="row g-2 align-items-end">
                 <div class="col-md-3">
                     <label for="data_inicio" class="form-label">Data Início</label>
                     <input type="date" class="form-control form-control-sm" id="data_inicio" name="data_inicio"

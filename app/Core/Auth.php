@@ -24,7 +24,17 @@ use PDO;
 final class Auth
 {
     /**
-     * Verifica se há usuário autenticado válido (IP + UA + timeout).
+     * Verifica se há usuário autenticado válido.
+     *
+     * CORREÇÃO BUG #3: Antes destruíamos a sessão se IP/UA não batessem exatamente.
+     * Em shared hosting (Hostinger, etc.) com load balancer ou proxy, o IP pode
+     * mudar entre requests, destruindo sessões legítimas e causando loop de redirect.
+     *
+     * Nova estratégia:
+     * - user_id deve estar na sessão
+     * - last_activity deve estar dentro do timeout
+     * - IP/UA: logar warning se divergir, mas NÃO destruir sessão (apenas invalidar)
+     *   Apenas se o IP mudar E user_id não existir no DB → destruir
      *
      * @return bool
      */
@@ -35,18 +45,36 @@ final class Auth
             return false;
         }
 
+        // Verifica timeout (destrói sessão se expirou)
+        $lifetime = defined('SESSION_LIFETIME') ? (int) SESSION_LIFETIME * 60 : 1800;
+        $lastActivity = Session::get('last_activity');
+        if ($lastActivity !== null && (time() - (int) $lastActivity) > $lifetime) {
+            Session::destroy();
+            return false;
+        }
+        // Atualiza last_activity
+        Session::set('last_activity', time());
+
+        // Validação leve de IP/UA — loga mas não destrói (compatibilidade shared hosting)
         $sessionIp = Session::get('ip');
         $sessionUa = Session::get('user_agent');
         $currentIp = Request::ip();
         $currentUa = Request::userAgent();
-
-        if ($sessionIp !== $currentIp || $sessionUa !== $currentUa) {
-            // Sessão inválida — possivel hijack. Destroy.
+        if ($sessionIp !== null && $sessionIp !== $currentIp) {
+            // IP mudou — pode ser load balancer. Logar warning mas manter sessão.
+            if (class_exists(Logger::class)) {
+                Logger::error('IP divergente na sessão', [
+                    'session_ip' => $sessionIp,
+                    'current_ip' => $currentIp,
+                    'user_id' => $userId,
+                ]);
+            }
+        }
+        if ($sessionUa !== null && $sessionUa !== $currentUa) {
+            // UA mudou drasticamente — possivel hijack. Aqui sim, destruir.
             Session::destroy();
             return false;
         }
-
-        self::checkTimeout();
 
         return true;
     }
@@ -78,6 +106,9 @@ final class Auth
     /**
      * Garante autenticação (e permissão se informada).
      *
+     * CORREÇÃO BUG #4: usar URL relativa (login.php) em vez de absoluta (/login.php)
+     * para funcionar em subdiretório do host (Hostinger, etc.)
+     *
      * @param string|null $modulo Módulo (ex.: "contas").
      * @param string|null $acao   Ação (ex.: "read", "create", "update", "delete").
      */
@@ -85,7 +116,7 @@ final class Auth
     {
         if (!self::check()) {
             Flash::warning('É necessário autenticar-se para continuar.');
-            Response::redirect('/login.php');
+            Response::redirect('login.php');
         }
 
         if ($modulo !== null && $acao !== null) {
@@ -198,7 +229,7 @@ final class Auth
         // e havia usuário logado, redireciona para login.
         if ($hadUser && self::id() === null) {
             Flash::warning('Sessão expirada por inatividade. Faça login novamente.');
-            Response::redirect('/login.php');
+            Response::redirect('login.php');
         }
     }
 }

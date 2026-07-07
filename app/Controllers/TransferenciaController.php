@@ -48,7 +48,7 @@ class TransferenciaController
             $this->novo();
             return;
         }
-        Response::redirect('/transferencias/novo');
+        Response::redirect('index.php?route=transferencias/novo');
     }
 
     /**
@@ -74,7 +74,7 @@ class TransferenciaController
 
         if (!Csrf::verify((string) Request::post('_csrf', ''))) {
             Flash::error('Token CSRF inválido.');
-            Response::redirect('/transferencias/novo');
+            Response::redirect('index.php?route=transferencias/novo');
         }
 
         $origemId  = (int) Request::post('conta_origem_id', 0);
@@ -143,7 +143,7 @@ class TransferenciaController
                 'observacao'        => $observ,
             ]);
             Flash::success('Transferência realizada com sucesso.');
-            Response::redirect('/dashboard');
+            Response::redirect('index.php?route=dashboard');
         } catch (\Throwable $e) {
             \App\Core\Logger::error('Falha ao realizar transferência: ' . $e->getMessage());
             Flash::error('Erro ao realizar transferência: ' . $e->getMessage());

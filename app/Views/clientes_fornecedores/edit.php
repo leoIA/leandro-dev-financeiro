@@ -12,14 +12,14 @@ $val = function($field, $default = '') use ($cf, $old) {
 <div class="container-fluid">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h1 class="h3 mb-0"><?= htmlspecialchars($pageTitle ?? 'Editar Cliente / Fornecedor', ENT_QUOTES, 'UTF-8') ?></h1>
-        <a href="/clientes-fornecedores" class="btn btn-outline-secondary btn-sm">
+        <a href="index.php?route=clientes-fornecedores" class="btn btn-outline-secondary btn-sm">
             <i class="bi bi-arrow-left"></i> Voltar
         </a>
     </div>
 
     <div class="card shadow-sm">
         <div class="card-body">
-            <form method="post" action="/clientes-fornecedores/<?= (int)($cf['id'] ?? 0) ?>" class="needs-validation" novalidate>
+            <form method="post" action="index.php?route=clientes-fornecedores/<?= (int)($cf['id'] ?? 0) ?>" class="needs-validation" novalidate>
                 <?= App\Core\Csrf::field() ?>
                 <input type="hidden" name="_method" value="PUT">
 
@@ -162,7 +162,7 @@ $val = function($field, $default = '') use ($cf, $old) {
 
                 <hr>
                 <div class="d-flex justify-content-end gap-2">
-                    <a href="/clientes-fornecedores" class="btn btn-outline-secondary">Cancelar</a>
+                    <a href="index.php?route=clientes-fornecedores" class="btn btn-outline-secondary">Cancelar</a>
                     <button type="submit" class="btn btn-primary">
                         <i class="bi bi-save"></i> Salvar Alterações
                     </button>
@@ -172,7 +172,7 @@ $val = function($field, $default = '') use ($cf, $old) {
     </div>
 </div>
 
-<script src="/public/js/viacep.js"></script>
+<script src="public/js/viacep.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const radios = document.querySelectorAll('input[name="tipo_pessoa"]');

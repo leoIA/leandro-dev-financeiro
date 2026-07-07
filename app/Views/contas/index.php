@@ -20,14 +20,14 @@ $tipoBadge = [
 <div class="container-fluid">
     <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
         <h1 class="h3 mb-0"><i class="bi bi-bank me-2 text-primary"></i><?= htmlspecialchars($pageTitle ?? 'Contas', ENT_QUOTES, 'UTF-8') ?></h1>
-        <a href="/contas/novo" class="btn btn-success btn-sm">
+        <a href="index.php?route=contas/novo" class="btn btn-success btn-sm">
             <i class="bi bi-plus-lg"></i> Nova Conta
         </a>
     </div>
 
     <div class="card shadow-sm mb-3">
         <div class="card-body">
-            <form method="get" action="/contas" class="row g-2 align-items-end">
+            <form method="get" action="index.php?route=contas" class="row g-2 align-items-end">
                 <div class="col-md-3">
                     <label for="f_tipo" class="form-label">Tipo</label>
                     <select class="form-select form-select-sm" id="f_tipo" name="tipo">
@@ -51,7 +51,7 @@ $tipoBadge = [
                     <button type="submit" class="btn btn-outline-primary btn-sm flex-grow-1">
                         <i class="bi bi-search"></i> Filtrar
                     </button>
-                    <a href="/contas" class="btn btn-outline-secondary btn-sm">
+                    <a href="index.php?route=contas" class="btn btn-outline-secondary btn-sm">
                         <i class="bi bi-x-lg"></i> Limpar
                     </a>
                 </div>
@@ -102,21 +102,21 @@ $tipoBadge = [
                                         <?php endif; ?>
                                     </td>
                                     <td class="text-center no-print">
-                                        <a href="/contas/<?= (int)$c['id'] ?>/editar" class="btn btn-sm btn-outline-primary" title="Editar">
+                                        <a href="index.php?route=contas/<?= (int)$c['id'] ?>/editar" class="btn btn-sm btn-outline-primary" title="Editar">
                                             <i class="bi bi-pencil"></i>
                                         </a>
-                                        <a href="/contas/<?= (int)$c['id'] ?>/extrato" class="btn btn-sm btn-outline-secondary" title="Ver extrato">
+                                        <a href="index.php?route=contas/<?= (int)$c['id'] ?>/extrato" class="btn btn-sm btn-outline-secondary" title="Ver extrato">
                                             <i class="bi bi-list-ul"></i>
                                         </a>
                                         <?php if (!empty($c['ativo'])): ?>
-                                            <form method="post" action="/contas/<?= (int)$c['id'] ?>/desativar" class="d-inline" data-confirm="Desativar esta conta? Lançamentos existentes permanecerão.">
+                                            <form method="post" action="index.php?route=contas/<?= (int)$c['id'] ?>/desativar" class="d-inline" data-confirm="Desativar esta conta? Lançamentos existentes permanecerão.">
                                                 <?= \App\Core\Csrf::field() ?>
                                                 <button type="submit" class="btn btn-sm btn-outline-danger" title="Desativar">
                                                     <i class="bi bi-x-circle"></i>
                                                 </button>
                                             </form>
                                         <?php else: ?>
-                                            <form method="post" action="/contas/<?= (int)$c['id'] ?>/ativar" class="d-inline">
+                                            <form method="post" action="index.php?route=contas/<?= (int)$c['id'] ?>/ativar" class="d-inline">
                                                 <?= \App\Core\Csrf::field() ?>
                                                 <button type="submit" class="btn btn-sm btn-outline-success" title="Reativar">
                                                     <i class="bi bi-check-circle"></i>

@@ -28,7 +28,7 @@ $formasPagamento = ['PIX' => 'PIX', 'BOLETO' => 'Boleto', 'CARTAO' => 'Cartão',
 <div class="container-fluid">
     <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
         <h1 class="h3 mb-0"><i class="bi bi-receipt me-2 text-primary"></i><?= htmlspecialchars($pageTitle ?? 'Editar Lançamento', ENT_QUOTES, 'UTF-8') ?></h1>
-        <a href="/lancamentos" class="btn btn-outline-secondary btn-sm">
+        <a href="index.php?route=lancamentos" class="btn btn-outline-secondary btn-sm">
             <i class="bi bi-arrow-left"></i> Voltar
         </a>
     </div>
@@ -49,7 +49,7 @@ $formasPagamento = ['PIX' => 'PIX', 'BOLETO' => 'Boleto', 'CARTAO' => 'Cartão',
 
     <div class="card shadow-sm">
         <div class="card-body">
-            <form method="post" action="/lancamentos/<?= (int)($lancamento['id'] ?? 0) ?>" class="needs-validation" novalidate>
+            <form method="post" action="index.php?route=lancamentos/<?= (int)($lancamento['id'] ?? 0) ?>" class="needs-validation" novalidate>
                 <?= \App\Core\Csrf::field() ?>
                 <input type="hidden" name="_method" value="PUT">
 
@@ -187,7 +187,7 @@ $formasPagamento = ['PIX' => 'PIX', 'BOLETO' => 'Boleto', 'CARTAO' => 'Cartão',
                 <div class="d-flex justify-content-between flex-wrap gap-2">
                     <div class="btn-group">
                         <?php if ($isPago): ?>
-                            <form method="post" action="/lancamentos/<?= (int)($lancamento['id'] ?? 0) ?>/estornar" class="d-inline" data-confirm="Estornar este lançamento? Ele voltará para o status PENDENTE e a data de pagamento será limpa.">
+                            <form method="post" action="index.php?route=lancamentos/<?= (int)($lancamento['id'] ?? 0) ?>/estornar" class="d-inline" data-confirm="Estornar este lançamento? Ele voltará para o status PENDENTE e a data de pagamento será limpa.">
                                 <?= \App\Core\Csrf::field() ?>
                                 <button type="submit" class="btn btn-outline-warning">
                                     <i class="bi bi-arrow-counterclockwise"></i> Estornar
@@ -201,7 +201,7 @@ $formasPagamento = ['PIX' => 'PIX', 'BOLETO' => 'Boleto', 'CARTAO' => 'Cartão',
                         <?php endif; ?>
                     </div>
                     <div class="d-flex gap-2">
-                        <a href="/lancamentos" class="btn btn-outline-secondary">Voltar</a>
+                        <a href="index.php?route=lancamentos" class="btn btn-outline-secondary">Voltar</a>
                         <?php if (!$isCancelado): ?>
                             <button type="submit" class="btn btn-primary">
                                 <i class="bi bi-save"></i> Salvar Alterações
@@ -218,7 +218,7 @@ $formasPagamento = ['PIX' => 'PIX', 'BOLETO' => 'Boleto', 'CARTAO' => 'Cartão',
 <div class="modal fade" id="cancelarLancamentoModal" tabindex="-1" aria-labelledby="cancelarLancamentoLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form id="cancelarLancamentoForm" method="post" action="/lancamentos/<?= (int)($lancamento['id'] ?? 0) ?>/cancelar">
+            <form id="cancelarLancamentoForm" method="post" action="index.php?route=lancamentos/<?= (int)($lancamento['id'] ?? 0) ?>/cancelar">
                 <?= \App\Core\Csrf::field() ?>
                 <div class="modal-header bg-danger text-white">
                     <h5 class="modal-title" id="cancelarLancamentoLabel"><i class="bi bi-x-circle me-2"></i>Cancelar Lançamento</h5>

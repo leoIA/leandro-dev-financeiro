@@ -8,14 +8,14 @@ $filtros = $filtros ?? ['tipo' => '', 'nome' => ''];
 <div class="container-fluid">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h1 class="h3 mb-0"><?= htmlspecialchars($pageTitle ?? 'Clientes / Fornecedores', ENT_QUOTES, 'UTF-8') ?></h1>
-        <a href="/clientes-fornecedores/novo" class="btn btn-primary btn-sm">
+        <a href="index.php?route=clientes-fornecedores/novo" class="btn btn-primary btn-sm">
             <i class="bi bi-plus-lg"></i> Novo
         </a>
     </div>
 
     <div class="card shadow-sm mb-3">
         <div class="card-body">
-            <form method="get" action="/clientes-fornecedores" class="row g-2 align-items-end">
+            <form method="get" action="index.php?route=clientes-fornecedores" class="row g-2 align-items-end">
                 <div class="col-md-3">
                     <label for="f_tipo" class="form-label">Tipo</label>
                     <select class="form-select form-select-sm" id="f_tipo" name="tipo">
@@ -35,7 +35,7 @@ $filtros = $filtros ?? ['tipo' => '', 'nome' => ''];
                     <button type="submit" class="btn btn-outline-primary btn-sm flex-grow-1">
                         <i class="bi bi-search"></i> Filtrar
                     </button>
-                    <a href="/clientes-fornecedores" class="btn btn-outline-secondary btn-sm">
+                    <a href="index.php?route=clientes-fornecedores" class="btn btn-outline-secondary btn-sm">
                         <i class="bi bi-x-lg"></i> Limpar
                     </a>
                 </div>
@@ -92,7 +92,7 @@ $filtros = $filtros ?? ['tipo' => '', 'nome' => ''];
                                     <td><?= htmlspecialchars($cf['telefone'] ?? '', ENT_QUOTES, 'UTF-8') ?></td>
                                     <td><?= htmlspecialchars($cf['email'] ?? '', ENT_QUOTES, 'UTF-8') ?></td>
                                     <td class="text-center no-print">
-                                        <a href="/clientes-fornecedores/<?= (int)$cf['id'] ?>/editar" class="btn btn-sm btn-outline-primary" title="Editar">
+                                        <a href="index.php?route=clientes-fornecedores/<?= (int)$cf['id'] ?>/editar" class="btn btn-sm btn-outline-primary" title="Editar">
                                             <i class="bi bi-pencil"></i>
                                         </a>
                                         <?php if (!empty($cf['ativo'])): ?>

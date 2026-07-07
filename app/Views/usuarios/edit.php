@@ -40,7 +40,7 @@ $perms = !empty($old['permissoes']) ? $old['permissoes'] : $permissoesUsuario;
 <div class="container-fluid">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h1 class="h3 mb-0"><?= htmlspecialchars($pageTitle ?? 'Editar Usuário', ENT_QUOTES, 'UTF-8') ?></h1>
-        <a href="/usuarios" class="btn btn-outline-secondary btn-sm">
+        <a href="index.php?route=usuarios" class="btn btn-outline-secondary btn-sm">
             <i class="bi bi-arrow-left"></i> Voltar
         </a>
     </div>
@@ -53,7 +53,7 @@ $perms = !empty($old['permissoes']) ? $old['permissoes'] : $permissoesUsuario;
 
     <div class="card shadow-sm">
         <div class="card-body">
-            <form method="post" action="/usuarios/<?= (int)($u['id'] ?? 0) ?>" class="needs-validation" novalidate>
+            <form method="post" action="index.php?route=usuarios/<?= (int)($u['id'] ?? 0) ?>" class="needs-validation" novalidate>
                 <?= App\Core\Csrf::field() ?>
                 <input type="hidden" name="_method" value="PUT">
 
@@ -155,7 +155,7 @@ $perms = !empty($old['permissoes']) ? $old['permissoes'] : $permissoesUsuario;
 
                 <hr>
                 <div class="d-flex justify-content-end gap-2">
-                    <a href="/usuarios" class="btn btn-outline-secondary">Cancelar</a>
+                    <a href="index.php?route=usuarios" class="btn btn-outline-secondary">Cancelar</a>
                     <button type="submit" class="btn btn-primary">
                         <i class="bi bi-save"></i> Salvar Alterações
                     </button>

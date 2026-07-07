@@ -31,15 +31,15 @@ $renderNode = static function (array $node, int $level) use (&$renderNode, $tipo
         : '<span class="btn-link p-0 me-1 d-inline-block text-muted" style="width:1.5rem;"><i class="bi bi-dot"></i></span>';
 
     $actions  = '<div class="btn-group btn-group-sm float-end" role="group">';
-    $actions .= '<a href="/plano-contas/novo?parent=' . $id . '" class="btn btn-outline-success" title="Adicionar filho"><i class="bi bi-plus-lg"></i></a>';
-    $actions .= '<a href="/plano-contas/' . $id . '/editar" class="btn btn-outline-primary" title="Editar"><i class="bi bi-pencil"></i></a>';
+    $actions .= '<a href="index.php?route=plano-contas/novo?parent=' . $id . '" class="btn btn-outline-success" title="Adicionar filho"><i class="bi bi-plus-lg"></i></a>';
+    $actions .= '<a href="index.php?route=plano-contas/' . $id . '/editar" class="btn btn-outline-primary" title="Editar"><i class="bi bi-pencil"></i></a>';
     if ($ativo) {
-        $actions .= '<form method="post" action="/plano-contas/' . $id . '/desativar" class="d-inline" data-confirm="Desativar esta conta do plano?">';
+        $actions .= '<form method="post" action="index.php?route=plano-contas/' . $id . '/desativar" class="d-inline" data-confirm="Desativar esta conta do plano?">';
         $actions .= \App\Core\Csrf::field();
         $actions .= '<button type="submit" class="btn btn-outline-danger" title="Desativar"><i class="bi bi-x-circle"></i></button>';
         $actions .= '</form>';
     } else {
-        $actions .= '<form method="post" action="/plano-contas/' . $id . '/ativar" class="d-inline">';
+        $actions .= '<form method="post" action="index.php?route=plano-contas/' . $id . '/ativar" class="d-inline">';
         $actions .= \App\Core\Csrf::field();
         $actions .= '<button type="submit" class="btn btn-outline-success" title="Reativar"><i class="bi bi-check-circle"></i></button>';
         $actions .= '</form>';
@@ -70,7 +70,7 @@ $renderNode = static function (array $node, int $level) use (&$renderNode, $tipo
         <div class="btn-toolbar gap-2">
             <button type="button" class="btn btn-outline-secondary btn-sm" id="btnExpandAll"><i class="bi bi-arrows-angle-expand"></i> Expandir</button>
             <button type="button" class="btn btn-outline-secondary btn-sm" id="btnCollapseAll"><i class="bi bi-arrows-angle-contract"></i> Recolher</button>
-            <a href="/plano-contas/novo" class="btn btn-success btn-sm">
+            <a href="index.php?route=plano-contas/novo" class="btn btn-success btn-sm">
                 <i class="bi bi-plus-lg"></i> Nova Conta Raiz
             </a>
         </div>

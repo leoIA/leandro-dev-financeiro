@@ -8,7 +8,7 @@ $currentUser = Auth::user();
 <div class="container-fluid">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h1 class="h3 mb-0"><?= htmlspecialchars($pageTitle ?? 'Usuários', ENT_QUOTES, 'UTF-8') ?></h1>
-        <a href="/usuarios/novo" class="btn btn-primary btn-sm">
+        <a href="index.php?route=usuarios/novo" class="btn btn-primary btn-sm">
             <i class="bi bi-plus-lg"></i> Novo Usuário
         </a>
     </div>
@@ -60,12 +60,12 @@ $currentUser = Auth::user();
                                         <?php endif; ?>
                                     </td>
                                     <td class="text-center no-print">
-                                        <a href="/usuarios/<?= (int)$u['id'] ?>/editar" class="btn btn-sm btn-outline-primary" title="Editar">
+                                        <a href="index.php?route=usuarios/<?= (int)$u['id'] ?>/editar" class="btn btn-sm btn-outline-primary" title="Editar">
                                             <i class="bi bi-pencil"></i>
                                         </a>
                                         <?php if (!empty($u['ativo'])): ?>
                                             <?php if (empty($currentUser) || (int)($currentUser['id'] ?? 0) !== (int)($u['id'] ?? 0)): ?>
-                                                <form method="post" action="/usuarios/<?= (int)$u['id'] ?>/desativar" class="d-inline" data-confirm="Desativar este usuário? Ele não poderá mais acessar o sistema.">
+                                                <form method="post" action="index.php?route=usuarios/<?= (int)$u['id'] ?>/desativar" class="d-inline" data-confirm="Desativar este usuário? Ele não poderá mais acessar o sistema.">
                                                     <?= App\Core\Csrf::field() ?>
                                                     <button type="submit" class="btn btn-sm btn-outline-danger" title="Desativar">
                                                         <i class="bi bi-x-circle"></i>
@@ -77,7 +77,7 @@ $currentUser = Auth::user();
                                                 </button>
                                             <?php endif; ?>
                                         <?php else: ?>
-                                            <form method="post" action="/usuarios/<?= (int)$u['id'] ?>/ativar" class="d-inline">
+                                            <form method="post" action="index.php?route=usuarios/<?= (int)$u['id'] ?>/ativar" class="d-inline">
                                                 <?= App\Core\Csrf::field() ?>
                                                 <button type="submit" class="btn btn-sm btn-outline-success" title="Reativar">
                                                     <i class="bi bi-check-circle"></i>

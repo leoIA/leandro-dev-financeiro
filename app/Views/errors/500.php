@@ -11,7 +11,7 @@ $mensagem = $mensagem ?? 'Tente novamente em instantes. Se o erro persistir, con
     <title>500 — Erro interno do servidor — Leandro DEV Financeiro</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
-    <link href="/public/css/app.css" rel="stylesheet">
+    <link href="public/css/app.css" rel="stylesheet">
     <style>
         body { background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); }
         .error-card { max-width: 540px; margin: 0 auto; }
@@ -25,7 +25,7 @@ $mensagem = $mensagem ?? 'Tente novamente em instantes. Se o erro persistir, con
                 <h1 class="display-5 fw-bold mt-3 mb-2">500</h1>
                 <h2 class="h5 text-muted mb-3">Erro interno do servidor</h2>
                 <p class="text-muted mb-4"><?= htmlspecialchars($mensagem, ENT_QUOTES, 'UTF-8') ?></p>
-                <a href="/dashboard" class="btn btn-primary">
+                <a href="index.php?route=dashboard" class="btn btn-primary">
                     <i class="bi bi-house-door"></i> Voltar para Dashboard
                 </a>
             </div>

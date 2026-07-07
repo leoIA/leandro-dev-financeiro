@@ -49,14 +49,14 @@ if (!empty($parentId)) {
             <i class="bi bi-diagram-3 me-2 text-primary"></i>
             <?= htmlspecialchars($pageTitle ?? 'Nova Conta', ENT_QUOTES, 'UTF-8') ?>
         </h1>
-        <a href="/plano-contas" class="btn btn-outline-secondary btn-sm">
+        <a href="index.php?route=plano-contas" class="btn btn-outline-secondary btn-sm">
             <i class="bi bi-arrow-left"></i> Voltar
         </a>
     </div>
 
     <div class="card shadow-sm">
         <div class="card-body">
-            <form method="post" action="/plano-contas" class="needs-validation" novalidate>
+            <form method="post" action="index.php?route=plano-contas" class="needs-validation" novalidate>
                 <?= \App\Core\Csrf::field() ?>
 
                 <div class="row g-3">
@@ -109,7 +109,7 @@ if (!empty($parentId)) {
 
                 <hr>
                 <div class="d-flex justify-content-end gap-2">
-                    <a href="/plano-contas" class="btn btn-outline-secondary">Cancelar</a>
+                    <a href="index.php?route=plano-contas" class="btn btn-outline-secondary">Cancelar</a>
                     <button type="submit" class="btn btn-primary">
                         <i class="bi bi-save"></i> Salvar
                     </button>

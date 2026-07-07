@@ -54,7 +54,7 @@ class PlanoContasController
             return;
         }
         if ($id !== '') {
-            Response::redirect('/plano-contas/' . urlencode($id) . '/editar');
+            Response::redirect('index.php?route=plano-contas/' . urlencode($id) . '/editar');
             return;
         }
 
@@ -93,7 +93,7 @@ class PlanoContasController
 
         if (!Csrf::verify((string) Request::post('_csrf', ''))) {
             Flash::error('Token CSRF inválido.');
-            Response::redirect('/plano-contas/novo');
+            Response::redirect('index.php?route=plano-contas/novo');
         }
 
         $parentId = Request::post('parent_id', '');
@@ -147,7 +147,7 @@ class PlanoContasController
         try {
             $planoModel->create($data);
             Flash::success('Conta do plano criada com sucesso.');
-            Response::redirect('/plano-contas');
+            Response::redirect('index.php?route=plano-contas');
         } catch (\Throwable $e) {
             \App\Core\Logger::error('Falha ao criar plano de contas: ' . $e->getMessage());
             Flash::error('Erro ao criar conta do plano: ' . $e->getMessage());
@@ -176,7 +176,7 @@ class PlanoContasController
 
         if ($conta === null) {
             Flash::error('Conta do plano não encontrada.');
-            Response::redirect('/plano-contas');
+            Response::redirect('index.php?route=plano-contas');
         }
 
         $hasFilhos = $planoModel->hasFilhos((int) $id);
@@ -195,7 +195,7 @@ class PlanoContasController
 
         if (!Csrf::verify((string) Request::post('_csrf', ''))) {
             Flash::error('Token CSRF inválido.');
-            Response::redirect('/plano-contas/' . $id . '/editar');
+            Response::redirect('index.php?route=plano-contas/' . $id . '/editar');
         }
 
         // parent_id não pode mudar se tem filhos.
@@ -258,7 +258,7 @@ class PlanoContasController
         try {
             $planoModel->update((int) $id, $data);
             Flash::success('Conta do plano atualizada com sucesso.');
-            Response::redirect('/plano-contas');
+            Response::redirect('index.php?route=plano-contas');
         } catch (\Throwable $e) {
             \App\Core\Logger::error('Falha ao atualizar plano de contas: ' . $e->getMessage());
             Flash::error('Erro ao atualizar conta: ' . $e->getMessage());
@@ -285,7 +285,7 @@ class PlanoContasController
 
         if (!Csrf::verify((string) Request::post('_csrf', ''))) {
             Flash::error('Token CSRF inválido.');
-            Response::redirect('/plano-contas');
+            Response::redirect('index.php?route=plano-contas');
         }
 
         $planoModel = new PlanoContas();
@@ -293,11 +293,11 @@ class PlanoContasController
 
         if ($planoModel->hasFilhos($idInt)) {
             Flash::error('Não é possível desativar: esta conta possui sub-contas. Desative as sub-contas primeiro.');
-            Response::redirect('/plano-contas');
+            Response::redirect('index.php?route=plano-contas');
         }
         if ($planoModel->hasLancamentos($idInt)) {
             Flash::error('Não é possível desativar: existem lançamentos vinculados a esta conta do plano.');
-            Response::redirect('/plano-contas');
+            Response::redirect('index.php?route=plano-contas');
         }
 
         try {
@@ -307,7 +307,7 @@ class PlanoContasController
             \App\Core\Logger::error('Falha ao desativar plano: ' . $e->getMessage());
             Flash::error('Erro ao desativar conta.');
         }
-        Response::redirect('/plano-contas');
+        Response::redirect('index.php?route=plano-contas');
     }
 
     /**
@@ -323,7 +323,7 @@ class PlanoContasController
 
         if (!Csrf::verify((string) Request::post('_csrf', ''))) {
             Flash::error('Token CSRF inválido.');
-            Response::redirect('/plano-contas');
+            Response::redirect('index.php?route=plano-contas');
         }
 
         try {
@@ -333,6 +333,6 @@ class PlanoContasController
             \App\Core\Logger::error('Falha ao ativar plano: ' . $e->getMessage());
             Flash::error('Erro ao ativar conta.');
         }
-        Response::redirect('/plano-contas');
+        Response::redirect('index.php?route=plano-contas');
     }
 }

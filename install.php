@@ -112,6 +112,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     // Executar statement por statement (split respeitando strings)
                     executeSqlStatements($pdo, $sql);
                 }
+
+                // Executar db_nfse.sql (schema do módulo NFSe)
+                // Se o arquivo não existir, pula sem erro (apenas warning log)
+                if (!$erro) {
+                    $nfseSql = file_get_contents(__DIR__ . '/db_nfse.sql');
+                    if ($nfseSql !== false) {
+                        if ($dbName !== 'leandro_dev_fin') {
+                            $nfseSql = str_replace('leandro_dev_fin', $dbName, $nfseSql);
+                        }
+                        executeSqlStatements($pdo, $nfseSql);
+                    } else {
+                        @error_log('[install] db_nfse.sql não encontrado — módulo NFSe não instalado.');
+                    }
+                }
             }
         } catch (Throwable $e) {
             $erro = 'Erro: ' . $e->getMessage();

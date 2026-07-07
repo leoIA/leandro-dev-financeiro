@@ -8,10 +8,10 @@ use App\Core\Auth;
     <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
         <h1 class="h3 mb-0"><?= htmlspecialchars($pageTitle ?? 'Contas Programadas', ENT_QUOTES, 'UTF-8') ?></h1>
         <div class="btn-toolbar gap-2">
-            <a href="/contas-programadas/gerar-pendentes" class="btn btn-outline-success btn-sm" data-confirm="Confirma a geração de todos os lançamentos pendentes até hoje?">
+            <a href="index.php?route=contas-programadas/gerar-pendentes" class="btn btn-outline-success btn-sm" data-confirm="Confirma a geração de todos os lançamentos pendentes até hoje?">
                 <i class="bi bi-lightning-charge"></i> Gerar Pendentes
             </a>
-            <a href="/contas-programadas/novo" class="btn btn-primary btn-sm">
+            <a href="index.php?route=contas-programadas/novo" class="btn btn-primary btn-sm">
                 <i class="bi bi-plus-lg"></i> Nova Programação
             </a>
         </div>
@@ -75,11 +75,11 @@ use App\Core\Auth;
                                         <?php endif; ?>
                                     </td>
                                     <td class="text-center no-print">
-                                        <a href="/contas-programadas/<?= (int)$p['id'] ?>/editar" class="btn btn-sm btn-outline-primary" title="Editar">
+                                        <a href="index.php?route=contas-programadas/<?= (int)$p['id'] ?>/editar" class="btn btn-sm btn-outline-primary" title="Editar">
                                             <i class="bi bi-pencil"></i>
                                         </a>
                                         <?php if (!empty($p['ativo'])): ?>
-                                            <form method="post" action="/contas-programadas/<?= (int)$p['id'] ?>/desativar" class="d-inline" data-confirm="Desativar esta programação? Ela não gerará mais lançamentos.">
+                                            <form method="post" action="index.php?route=contas-programadas/<?= (int)$p['id'] ?>/desativar" class="d-inline" data-confirm="Desativar esta programação? Ela não gerará mais lançamentos.">
                                                 <?= App\Core\Csrf::field() ?>
                                                 <button type="submit" class="btn btn-sm btn-outline-danger" title="Desativar">
                                                     <i class="bi bi-x-circle"></i>

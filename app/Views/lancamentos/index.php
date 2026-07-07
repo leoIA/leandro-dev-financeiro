@@ -37,10 +37,10 @@ $csvQuery = http_build_query(array_filter($filtros));
     <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
         <h1 class="h3 mb-0"><i class="bi bi-receipt me-2 text-primary"></i><?= htmlspecialchars($pageTitle ?? 'Lançamentos', ENT_QUOTES, 'UTF-8') ?></h1>
         <div class="btn-toolbar gap-2">
-            <a href="/lancamentos/exportar-csv?<?= htmlspecialchars($csvQuery, ENT_QUOTES, 'UTF-8') ?>" class="btn btn-outline-success btn-sm">
+            <a href="index.php?route=lancamentos/exportar-csv?<?= htmlspecialchars($csvQuery, ENT_QUOTES, 'UTF-8') ?>" class="btn btn-outline-success btn-sm">
                 <i class="bi bi-filetype-csv"></i> Exportar CSV
             </a>
-            <a href="/lancamentos/novo" class="btn btn-primary btn-sm">
+            <a href="index.php?route=lancamentos/novo" class="btn btn-primary btn-sm">
                 <i class="bi bi-plus-lg"></i> Novo Lançamento
             </a>
         </div>
@@ -48,7 +48,7 @@ $csvQuery = http_build_query(array_filter($filtros));
 
     <div class="card shadow-sm mb-3">
         <div class="card-body">
-            <form method="get" action="/lancamentos" class="row g-2 align-items-end">
+            <form method="get" action="index.php?route=lancamentos" class="row g-2 align-items-end">
                 <div class="col-md-2">
                     <label for="f_conta" class="form-label">Conta</label>
                     <select class="form-select form-select-sm" id="f_conta" name="conta_id">
@@ -113,7 +113,7 @@ $csvQuery = http_build_query(array_filter($filtros));
                     <button type="submit" class="btn btn-outline-primary btn-sm flex-grow-1">
                         <i class="bi bi-search"></i> Filtrar
                     </button>
-                    <a href="/lancamentos" class="btn btn-outline-secondary btn-sm">
+                    <a href="index.php?route=lancamentos" class="btn btn-outline-secondary btn-sm">
                         <i class="bi bi-x-lg"></i> Limpar
                     </a>
                 </div>
@@ -167,11 +167,11 @@ $csvQuery = http_build_query(array_filter($filtros));
                                     <td class="text-end fw-semibold <?= $valorClass ?>"><?= Format::moneyBRL((float)($l['valor'] ?? 0)) ?></td>
                                     <td><?= $statusBadge[$l['status'] ?? 'PENDENTE'] ?? $statusBadge['PENDENTE'] ?></td>
                                     <td class="text-center no-print">
-                                        <a href="/lancamentos/<?= (int)$l['id'] ?>/editar" class="btn btn-sm btn-outline-primary" title="Editar">
+                                        <a href="index.php?route=lancamentos/<?= (int)$l['id'] ?>/editar" class="btn btn-sm btn-outline-primary" title="Editar">
                                             <i class="bi bi-pencil"></i>
                                         </a>
                                         <?php if ($isPendente): ?>
-                                            <form method="post" action="/lancamentos/<?= (int)$l['id'] ?>/marcar-pago" class="d-inline" data-confirm="Marcar este lançamento como PAGO?">
+                                            <form method="post" action="index.php?route=lancamentos/<?= (int)$l['id'] ?>/marcar-pago" class="d-inline" data-confirm="Marcar este lançamento como PAGO?">
                                                 <?= \App\Core\Csrf::field() ?>
                                                 <button type="submit" class="btn btn-sm btn-outline-success" title="Marcar como pago">
                                                     <i class="bi bi-check2-circle"></i>

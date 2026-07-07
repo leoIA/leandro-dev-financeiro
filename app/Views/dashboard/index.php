@@ -59,7 +59,7 @@ $statusBadge = [
     <section class="mb-4">
         <div class="d-flex justify-content-between align-items-center mb-3">
             <h2 class="h5 mb-0"><i class="bi bi-bank me-2 text-primary"></i>Contas</h2>
-            <a href="/contas" class="btn btn-sm btn-outline-primary">Gerenciar contas</a>
+            <a href="index.php?route=contas" class="btn btn-sm btn-outline-primary">Gerenciar contas</a>
         </div>
         <div class="row g-3">
             <?php if (empty($contas)): ?>
@@ -79,7 +79,7 @@ $statusBadge = [
                                         <h6 class="card-title mb-0"><?= htmlspecialchars($c['nome'] ?? '', ENT_QUOTES, 'UTF-8') ?></h6>
                                         <div class="small text-muted"><?= $tipoContaBadge[$c['tipo'] ?? 'OUTRO'] ?? $tipoContaBadge['OUTRO'] ?></div>
                                     </div>
-                                    <a href="/contas/<?= (int)($c['id'] ?? 0) ?>/extrato" class="btn btn-sm btn-outline-secondary" title="Ver extrato">
+                                    <a href="index.php?route=contas/<?= (int)($c['id'] ?? 0) ?>/extrato" class="btn btn-sm btn-outline-secondary" title="Ver extrato">
                                         <i class="bi bi-list-ul"></i>
                                     </a>
                                 </div>
@@ -116,7 +116,7 @@ $statusBadge = [
     <section class="mb-4">
         <div class="d-flex justify-content-between align-items-center mb-3">
             <h2 class="h5 mb-0"><i class="bi bi-bar-chart-line me-2 text-primary"></i>Fluxo de Caixa (Últimos 6 Meses)</h2>
-            <a href="/relatorios/fluxo-caixa" class="btn btn-sm btn-outline-primary">Ver relatório completo</a>
+            <a href="index.php?route=relatorios/fluxo-caixa" class="btn btn-sm btn-outline-primary">Ver relatório completo</a>
         </div>
         <div class="card shadow-sm">
             <div class="card-body">
@@ -133,7 +133,7 @@ $statusBadge = [
     <section class="mb-4" id="proximas">
         <div class="d-flex justify-content-between align-items-center mb-3">
             <h2 class="h5 mb-0"><i class="bi bi-calendar-event me-2 text-primary"></i>Próximas Contas Programadas</h2>
-            <a href="/contas-programadas" class="btn btn-sm btn-outline-primary">Ver todas</a>
+            <a href="index.php?route=contas-programadas" class="btn btn-sm btn-outline-primary">Ver todas</a>
         </div>
         <div class="card shadow-sm">
             <div class="card-body">
@@ -175,7 +175,7 @@ $statusBadge = [
     <section class="mb-4">
         <div class="d-flex justify-content-between align-items-center mb-3">
             <h2 class="h5 mb-0"><i class="bi bi-receipt me-2 text-primary"></i>Últimos Lançamentos</h2>
-            <a href="/lancamentos" class="btn btn-sm btn-outline-primary">Ver todos</a>
+            <a href="index.php?route=lancamentos" class="btn btn-sm btn-outline-primary">Ver todos</a>
         </div>
         <div class="card shadow-sm">
             <div class="card-body">

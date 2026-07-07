@@ -19,7 +19,7 @@ $totais = $totais ?? [];
 
     <div class="card shadow-sm mb-3 no-print">
         <div class="card-body">
-            <form method="get" action="/relatorios/dre" class="row g-2 align-items-end">
+            <form method="get" action="index.php?route=relatorios/dre" class="row g-2 align-items-end">
                 <div class="col-md-4">
                     <label for="mes" class="form-label">Mês de Referência</label>
                     <select class="form-select form-select-sm" id="mes" name="mes">

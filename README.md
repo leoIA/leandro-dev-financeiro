@@ -134,9 +134,58 @@ leandro-dev-financeiro/
 - Arquivos `.sql` ficam em `/storage/backups/`
 - Manter últimos N backups (configurável em Configurações → Backup)
 
+## Módulo NFSe Bahia
+
+O sistema inclui módulo NFSe (Nota Fiscal de Serviço Eletrônica) para os 10 maiores municípios da Bahia:
+
+### Municípios suportados
+- Salvador (sistema próprio)
+- Feira de Santana, Camaçari, Vitória da Conquista, Juazeiro, Lauro de Freitas (WebISS)
+- Itabuna, Ilhéus, Jequié (Betha)
+- Teixeira de Freitas (DSF)
+
+### Configuração inicial
+1. Acesse o menu **NFSe → Configurar** e selecione o município ativo + ambiente (HOMOLOGACAO/PRODUCAO)
+2. Informe a Inscrição Municipal (IM) da MM Construtora
+3. Acesse **NFSe → Certificado** e faça upload do certificado digital A1 (.pfx/.p12) + senha
+4. Teste emissão em HOMOLOGACAO antes de mudar para PRODUCAO
+
+### Operações
+- **Emitir NFSe**: gera RPS, assina XML com certificado A1, envia para prefeitura, retorna número + código verificação
+- **Consultar**: consulta situação pelo protocolo
+- **Cancelar**: cancela NFSe autorizada com motivo
+- **DANFSE**: gera PDF imprimível da NFSe autorizada
+
+### Testes
+```bash
+# Instalar PHPUnit (opcional, apenas para testes)
+composer require --dev phpunit/phpunit ^10
+
+# Rodar testes unitários
+vendor/bin/phpunit tests/Nfse
+
+# Rodar teste E2E com mock HTTP server
+php tests/E2E/mock_homologacao.php
+```
+
+### Limitações
+- Apenas 4 provedores implementados (WebISS, Betha, DSF, Salvador). SimplISS e ISSNet retornam erro claro se selecionados.
+- Apenas emissão síncrona unitária (não suporta lote assíncrono).
+- Não suporta substituição de NFSe.
+
 ## Suporte
 
-Para suporte, entre em contato através dos canais da MM Construtora.
+Para suporte, entre em contato com o desenvolvedor:
+
+- **E-mail:** [leog3@live.com](mailto:leog3@live.com)
+- **Telefone/WhatsApp:** [+55 71 99178-2319](https://wa.me/5571991782319)
+- **Horário de atendimento:** Segunda a Sexta, 08h às 18h (Bahia)
+
+Para abrir um chamado técnico, descreva:
+- Versão do sistema (rodapé do sistema mostra v1.0.0)
+- Ambiente (homologação/produção)
+- Passos para reproduzir o problema
+- Logs relevantes em `/storage/logs/error_YYYYMMDD.log`
 
 ---
 

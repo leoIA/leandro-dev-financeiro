@@ -63,11 +63,12 @@ final class Router
         $routeKey = $segments[0] ?? '';
 
         // Rota raiz: encaminha para dashboard se autenticado, senão login.
+        // CORREÇÃO BUG #4: usar URLs relativas para funcionar em subdiretório do host
         if ($routeKey === '' || $routeKey === 'index.php') {
             if (Auth::check()) {
-                Response::redirect('/dashboard');
+                Response::redirect('index.php?route=dashboard');
             } else {
-                Response::redirect('/login.php');
+                Response::redirect('login.php');
             }
             return;
         }

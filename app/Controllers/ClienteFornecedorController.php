@@ -54,7 +54,7 @@ class ClienteFornecedorController
             return;
         }
         if ($id !== '') {
-            Response::redirect('/clientes-fornecedores/' . urlencode($id) . '/editar');
+            Response::redirect('index.php?route=clientes-fornecedores/' . urlencode($id) . '/editar');
             return;
         }
 
@@ -115,7 +115,7 @@ class ClienteFornecedorController
 
         if (!Csrf::verify((string) Request::post('_csrf', ''))) {
             Flash::error('Token CSRF inválido.');
-            Response::redirect('/clientes-fornecedores/novo');
+            Response::redirect('index.php?route=clientes-fornecedores/novo');
         }
 
         $data = $this->collectFromRequest();
@@ -132,7 +132,7 @@ class ClienteFornecedorController
         try {
             (new ClienteFornecedor())->create($data);
             Flash::success('Cliente / Fornecedor criado com sucesso.');
-            Response::redirect('/clientes-fornecedores');
+            Response::redirect('index.php?route=clientes-fornecedores');
         } catch (\Throwable $e) {
             \App\Core\Logger::error('Falha ao criar cliente/fornecedor: ' . $e->getMessage());
             Flash::error('Erro ao criar cliente/fornecedor: ' . $e->getMessage());
@@ -160,7 +160,7 @@ class ClienteFornecedorController
 
         if ($clienteFornecedor === null) {
             Flash::error('Cliente / Fornecedor não encontrado.');
-            Response::redirect('/clientes-fornecedores');
+            Response::redirect('index.php?route=clientes-fornecedores');
         }
 
         if (!Request::isPost()) {
@@ -174,7 +174,7 @@ class ClienteFornecedorController
 
         if (!Csrf::verify((string) Request::post('_csrf', ''))) {
             Flash::error('Token CSRF inválido.');
-            Response::redirect('/clientes-fornecedores/' . $id . '/editar');
+            Response::redirect('index.php?route=clientes-fornecedores/' . $id . '/editar');
         }
 
         $data = $this->collectFromRequest();
@@ -194,7 +194,7 @@ class ClienteFornecedorController
         try {
             $cfModel->update((int) $id, $update);
             Flash::success('Cliente / Fornecedor atualizado com sucesso.');
-            Response::redirect('/clientes-fornecedores');
+            Response::redirect('index.php?route=clientes-fornecedores');
         } catch (\Throwable $e) {
             \App\Core\Logger::error('Falha ao atualizar cliente/fornecedor: ' . $e->getMessage());
             Flash::error('Erro ao atualizar cliente/fornecedor: ' . $e->getMessage());
@@ -219,7 +219,7 @@ class ClienteFornecedorController
 
         if (!Csrf::verify((string) Request::post('_csrf', ''))) {
             Flash::error('Token CSRF inválido.');
-            Response::redirect('/clientes-fornecedores');
+            Response::redirect('index.php?route=clientes-fornecedores');
         }
 
         try {
@@ -229,7 +229,7 @@ class ClienteFornecedorController
             \App\Core\Logger::error('Falha ao desativar cliente/fornecedor: ' . $e->getMessage());
             Flash::error('Erro ao desativar cliente/fornecedor.');
         }
-        Response::redirect('/clientes-fornecedores');
+        Response::redirect('index.php?route=clientes-fornecedores');
     }
 
     // -----------------------------------------------------------------

@@ -60,7 +60,7 @@ class ConfiguracaoController
 
         if (!Csrf::verify((string) Request::post('_csrf', ''))) {
             Flash::error('Token CSRF inválido.');
-            Response::redirect('/configuracoes');
+            Response::redirect('index.php?route=configuracoes');
         }
 
         $cfg = new Configuracao();
@@ -93,7 +93,7 @@ class ConfiguracaoController
         }
 
         Flash::success('Configurações da empresa salvas com sucesso.');
-        Response::redirect('/configuracoes');
+        Response::redirect('index.php?route=configuracoes');
     }
 
     /**
@@ -107,7 +107,7 @@ class ConfiguracaoController
 
         if (!Csrf::verify((string) Request::post('_csrf', ''))) {
             Flash::error('Token CSRF inválido.');
-            Response::redirect('/configuracoes');
+            Response::redirect('index.php?route=configuracoes');
         }
 
         $cfg = new Configuracao();
@@ -116,7 +116,7 @@ class ConfiguracaoController
         $cfg->set('bloqueio_login_min', max(1, min(1440, (int) Request::post('bloqueio_login_min', 15))));
 
         Flash::success('Configurações de segurança salvas com sucesso.');
-        Response::redirect('/configuracoes');
+        Response::redirect('index.php?route=configuracoes');
     }
 
     /**
@@ -130,7 +130,7 @@ class ConfiguracaoController
 
         if (!Csrf::verify((string) Request::post('_csrf', ''))) {
             Flash::error('Token CSRF inválido.');
-            Response::redirect('/configuracoes');
+            Response::redirect('index.php?route=configuracoes');
         }
 
         $cfg = new Configuracao();
@@ -139,7 +139,7 @@ class ConfiguracaoController
         $cfg->set('backup_dia_mes', max(1, min(28, (int) Request::post('backup_dia_mes', 1))));
 
         Flash::success('Configurações de backup salvas com sucesso.');
-        Response::redirect('/configuracoes');
+        Response::redirect('index.php?route=configuracoes');
     }
 
     /**
@@ -153,11 +153,11 @@ class ConfiguracaoController
 
         if (!Csrf::verify((string) Request::post('_csrf', ''))) {
             Flash::error('Token CSRF inválido.');
-            Response::redirect('/configuracoes');
+            Response::redirect('index.php?route=configuracoes');
         }
 
         Flash::info('Configurações de sistema são fixas e não foram alteradas.');
-        Response::redirect('/configuracoes');
+        Response::redirect('index.php?route=configuracoes');
     }
 
     /**
@@ -171,7 +171,7 @@ class ConfiguracaoController
 
         if (!Csrf::verify((string) Request::post('_csrf', ''))) {
             Flash::error('Token CSRF inválido.');
-            Response::redirect('/configuracoes');
+            Response::redirect('index.php?route=configuracoes');
         }
 
         try {
@@ -181,7 +181,7 @@ class ConfiguracaoController
             \App\Core\Logger::error('Falha ao restaurar padrões: ' . $e->getMessage());
             Flash::error('Erro ao restaurar padrões: ' . $e->getMessage());
         }
-        Response::redirect('/configuracoes');
+        Response::redirect('index.php?route=configuracoes');
     }
 
     // -----------------------------------------------------------------

@@ -34,6 +34,8 @@ use App\Controllers\RelatorioController;
 use App\Controllers\UsuarioController;
 use App\Controllers\ConfiguracaoController;
 use App\Controllers\BackupController;
+use App\Controllers\SobreController;
+use App\Controllers\NfseController;
 
 App::boot();
 
@@ -50,17 +52,44 @@ Router::add('usuarios', UsuarioController::class);
 Router::add('perfil', UsuarioController::class, 'perfil');
 Router::add('configuracoes', ConfiguracaoController::class);
 Router::add('backups', BackupController::class);
+Router::add('sobre', SobreController::class);
+Router::add('nfse', NfseController::class);
 
 // Rota padrão: se raiz, vai para dashboard (Auth::require cuidará do redirect)
+// CORREÇÃO BUG #4: usar URLs relativas para funcionar em subdiretório do host
+// CORREÇÃO BUG #6: NÃO comparar $path com 'index.php' pois quando o app está na raiz
+// do document root, $path de 'index.php?route=dashboard' é 'index.php' → loop infinito.
+// Solução: usar APENAS $route (da query string ou path) como critério.
 $uri = $_SERVER['REQUEST_URI'] ?? '/';
 $path = trim((string) parse_url($uri, PHP_URL_PATH), '/');
-if ($path === '' || $path === 'index.php') {
+
+// CORREÇÃO BUG #1: extrair route via query string OU path
+// Suporta tanto /index.php?route=dashboard quanto /dashboard (via .htaccess rewrite)
+$route = $_GET['route'] ?? '';
+if ($route === '' && $path !== '' && $path !== 'index.php') {
+    $route = $path;
+}
+
+// Limpar prefixo de subdiretório do $path (ex: 'subdir/index.php' → 'index.php')
+// para que a comparação funcione em ambos root e subdir
+$pathBasename = basename($path);
+
+// Se route está vazio (raiz pura) ou path é apenas 'index.php' sem query route
+// então redireciona conforme auth
+if ($route === '' && ($path === '' || $pathBasename === 'index.php')) {
     if (Auth::check()) {
-        Response::redirect('/dashboard');
+        // Logado — vai para dashboard
+        Response::redirect('index.php?route=dashboard');
     } else {
-        Response::redirect('/login.php');
+        // Não logado — vai para login
+        Response::redirect('login.php');
     }
     exit;
+}
+
+// Se route veio via query string, simular URI para o router
+if ($route !== '' && $route !== $path && $route !== $pathBasename) {
+    $uri = '/' . $route;
 }
 
 try {

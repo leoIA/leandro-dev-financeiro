@@ -59,7 +59,7 @@ class ContaController
         }
         // GET com id → redireciona para edit form
         if ($id !== '') {
-            Response::redirect('/contas/' . urlencode($id) . '/editar');
+            Response::redirect('index.php?route=contas/' . urlencode($id) . '/editar');
             return;
         }
 
@@ -116,7 +116,7 @@ class ContaController
 
         if (!Csrf::verify((string) Request::post('_csrf', ''))) {
             Flash::error('Token CSRF inválido. Recarregue a página e tente novamente.');
-            Response::redirect('/contas/novo');
+            Response::redirect('index.php?route=contas/novo');
         }
 
         $data = [
@@ -158,7 +158,7 @@ class ContaController
             $contaModel = new Conta();
             $id = $contaModel->create($data);
             Flash::success('Conta criada com sucesso.');
-            Response::redirect('/contas/' . $id . '/editar');
+            Response::redirect('index.php?route=contas/' . $id . '/editar');
         } catch (\Throwable $e) {
             \App\Core\Logger::error('Falha ao criar conta: ' . $e->getMessage());
             Flash::error('Erro ao criar conta: ' . $e->getMessage());
@@ -186,7 +186,7 @@ class ContaController
 
         if ($conta === null) {
             Flash::error('Conta não encontrada.');
-            Response::redirect('/contas');
+            Response::redirect('index.php?route=contas');
         }
 
         if (!Request::isPost()) {
@@ -200,7 +200,7 @@ class ContaController
 
         if (!Csrf::verify((string) Request::post('_csrf', ''))) {
             Flash::error('Token CSRF inválido. Recarregue a página e tente novamente.');
-            Response::redirect('/contas/' . $id . '/editar');
+            Response::redirect('index.php?route=contas/' . $id . '/editar');
         }
 
         $data = [
@@ -243,7 +243,7 @@ class ContaController
         try {
             $contaModel->update((int) $id, $data);
             Flash::success('Conta atualizada com sucesso.');
-            Response::redirect('/contas');
+            Response::redirect('index.php?route=contas');
         } catch (\Throwable $e) {
             \App\Core\Logger::error('Falha ao atualizar conta: ' . $e->getMessage());
             Flash::error('Erro ao atualizar conta: ' . $e->getMessage());
@@ -268,7 +268,7 @@ class ContaController
 
         if (!Csrf::verify((string) Request::post('_csrf', ''))) {
             Flash::error('Token CSRF inválido.');
-            Response::redirect('/contas');
+            Response::redirect('index.php?route=contas');
         }
 
         try {
@@ -278,7 +278,7 @@ class ContaController
             \App\Core\Logger::error('Falha ao desativar conta: ' . $e->getMessage());
             Flash::error('Erro ao desativar conta.');
         }
-        Response::redirect('/contas');
+        Response::redirect('index.php?route=contas');
     }
 
     /**
@@ -294,7 +294,7 @@ class ContaController
 
         if (!Csrf::verify((string) Request::post('_csrf', ''))) {
             Flash::error('Token CSRF inválido.');
-            Response::redirect('/contas');
+            Response::redirect('index.php?route=contas');
         }
 
         try {
@@ -305,7 +305,7 @@ class ContaController
             \App\Core\Logger::error('Falha ao ativar conta: ' . $e->getMessage());
             Flash::error('Erro ao ativar conta.');
         }
-        Response::redirect('/contas');
+        Response::redirect('index.php?route=contas');
     }
 
     /**
@@ -324,7 +324,7 @@ class ContaController
 
         if ($conta === null) {
             Flash::error('Conta não encontrada.');
-            Response::redirect('/contas');
+            Response::redirect('index.php?route=contas');
         }
 
         // Aceita datas em formato ISO (YYYY-MM-DD) ou BR (dd/mm/AAAA) — input type=date envia ISO.

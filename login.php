@@ -10,13 +10,12 @@ declare(strict_types=1);
  * @brief   Tela de login com banner de instalação condicional
  */
 
-session_start();
-
-// Se já logado e sistema instalado, vai para dashboard
-if (file_exists(__DIR__ . '/config.php') && isset($_SESSION['user_id'])) {
-    header('Location: index.php');
-    exit;
-}
+// CORREÇÃO BUG #1: Não chamar session_start() aqui antes do App::boot().
+// App::boot() -> Session::start() define o nome do cookie (LEANDRODEVSESSID).
+// Se chamarmos session_start() aqui, o PHP usa PHPSESSID e a sessão se perde
+// ao redirecionar para index.php (que usa LEANDRODEVSESSID).
+// Solução: carregar config.php + App::boot() PRIMEIRO, que inicia a sessão
+// com o nome correto. Só então verificar $_SESSION.
 
 // Carrega App apenas se config existe
 $appLoaded = false;
@@ -25,6 +24,17 @@ if (file_exists(__DIR__ . '/config.php')) {
     require_once __DIR__ . '/app/Core/App.php';
     App\Core\App::boot();
     $appLoaded = true;
+} else {
+    // Sistema não instalado — inicia sessão básica só para CSRF
+    session_start();
+}
+
+// Após App::boot() (que chama Session::start()), $_SESSION está disponível
+// Agora sim podemos verificar se já está logado
+if ($appLoaded && isset($_SESSION['user_id'])) {
+    // Já logado — vai direto para dashboard
+    header('Location: index.php?route=dashboard');
+    exit;
 }
 
 use App\Core\Hash;
@@ -90,7 +100,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $appLoaded) {
                         $stmt = $pdo->prepare("INSERT INTO logs_tentativas_login (email, ip, sucesso) VALUES (?, ?, 1)");
                         $stmt->execute([$email, $ip]);
 
-                        header('Location: index.php');
+                        // CORREÇÃO BUG #4: usar URL relativa + ?route=dashboard
+                        // Evita loop e funciona em subdiretório do host
+                        header('Location: index.php?route=dashboard');
                         exit;
                     }
                 } else {
@@ -128,11 +140,11 @@ $csrfToken = $appLoaded ? Csrf::token() : bin2hex(random_bytes(32));
 $emailValue = htmlspecialchars($_POST['email'] ?? '', ENT_QUOTES, 'UTF-8');
 $erroHtml = $erro ? '<div class="alert alert-danger"><i class="bi bi-exclamation-triangle me-1"></i> ' . htmlspecialchars($erro, ENT_QUOTES, 'UTF-8') . '</div>' : '';
 $msgHtml = $mensagem ? '<div class="alert alert-info"><i class="bi bi-info-circle me-1"></i> ' . htmlspecialchars($mensagem, ENT_QUOTES, 'UTF-8') . '</div>' : '';
-$installBannerHtml = $showInstallBanner ? '<div class="alert alert-warning border-warning border-2 mb-4 rounded-3 d-flex align-items-center justify-content-between">
+$installBannerHtml = $showInstallBanner ? '<div class="alert alert-warning border-warning border-2 mb-4 rounded-3 d-flex flex-column flex-md-row align-items-start align-items-md-center justify-content-between gap-2">
         <div><i class="bi bi-exclamation-triangle-fill fs-4 me-2"></i>
             <strong>Sistema ainda não instalado.</strong> Clique no botão para iniciar a instalação.
         </div>
-        <a href="install.php" class="btn btn-success"><i class="bi bi-download me-1"></i> Instalar agora</a>
+        <a href="install.php" class="btn btn-success w-100 w-md-auto mt-2 mt-md-0"><i class="bi bi-download me-1"></i> Instalar agora</a>
     </div>' : '';
 $notInstalledAlert = !$appLoaded ? '<div class="alert alert-warning"><i class="bi bi-info-circle me-1"></i> O sistema precisa ser instalado antes do primeiro acesso.</div>' : '';
 $btnDisabled = !$appLoaded ? 'disabled' : '';
@@ -147,8 +159,15 @@ $btnDisabled = !$appLoaded ? 'disabled' : '';
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
     <style>
         body { background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); min-height: 100vh; }
-        .login-card { max-width: 420px; margin: 0 auto; }
+        .login-card { max-width: 420px; margin: 0 auto; padding: 0 1rem; }
         .brand-logo { font-size: 1.5rem; font-weight: 700; color: #0d6efd; }
+        @media (max-width: 360px) {
+            .login-card { padding: 0 0.5rem; }
+            .card-body { padding: 1.25rem !important; }
+            h1.brand-logo { font-size: 1.25rem; }
+        }
+        .alert-warning.border-warning { font-size: 0.875rem; }
+        .alert-warning.border-warning .btn { font-size: 0.875rem; }
     </style>
 </head>
 <body class="d-flex align-items-center min-vh-100 py-4">
@@ -187,9 +206,18 @@ $btnDisabled = !$appLoaded ? 'disabled' : '';
             </div>
         </div>
 
-        <p class="text-center text-muted mt-3 small">
-            Copyright © 2026 Leandro DEV — MM Construtora. Todos os direitos reservados.
-        </p>
+        <div class="text-center text-muted mt-3 small">
+            <div class="mb-1">Copyright © 2026 Leandro DEV — MM Construtora. Todos os direitos reservados.</div>
+            <div>
+                <a href="mailto:leog3@live.com" class="text-muted text-decoration-none">
+                    <i class="bi bi-envelope me-1"></i>leog3@live.com
+                </a>
+                <span class="mx-2">•</span>
+                <a href="https://wa.me/5571991782319" target="_blank" rel="noopener" class="text-muted text-decoration-none">
+                    <i class="bi bi-whatsapp me-1"></i>(71) 99178-2319
+                </a>
+            </div>
+        </div>
     </div>
 </div>
 </body>

@@ -62,7 +62,7 @@ class UsuarioController
             return;
         }
         if ($id !== '') {
-            Response::redirect('/usuarios/' . urlencode($id) . '/editar');
+            Response::redirect('index.php?route=usuarios/' . urlencode($id) . '/editar');
             return;
         }
 
@@ -96,7 +96,7 @@ class UsuarioController
 
         if (!Csrf::verify((string) Request::post('_csrf', ''))) {
             Flash::error('Token CSRF inválido.');
-            Response::redirect('/usuarios/novo');
+            Response::redirect('index.php?route=usuarios/novo');
         }
 
         $nome  = trim((string) Request::post('nome', ''));
@@ -155,7 +155,7 @@ class UsuarioController
         try {
             $usuarioId = (new Usuario())->createWithPermissoes($data, $this->resolvePermissaoIds($permissoes));
             Flash::success('Usuário criado com sucesso.');
-            Response::redirect('/usuarios/' . $usuarioId . '/editar');
+            Response::redirect('index.php?route=usuarios/' . $usuarioId . '/editar');
         } catch (\Throwable $e) {
             \App\Core\Logger::error('Falha ao criar usuário: ' . $e->getMessage());
             Flash::error('Erro ao criar usuário: ' . $e->getMessage());
@@ -183,7 +183,7 @@ class UsuarioController
 
         if ($usuario === null) {
             Flash::error('Usuário não encontrado.');
-            Response::redirect('/usuarios');
+            Response::redirect('index.php?route=usuarios');
         }
 
         $permissaoModel = new Permissao();
@@ -210,7 +210,7 @@ class UsuarioController
 
         if (!Csrf::verify((string) Request::post('_csrf', ''))) {
             Flash::error('Token CSRF inválido.');
-            Response::redirect('/usuarios/' . $id . '/editar');
+            Response::redirect('index.php?route=usuarios/' . $id . '/editar');
         }
 
         $authId = Auth::id();
@@ -281,7 +281,7 @@ class UsuarioController
             }
 
             Flash::success('Usuário atualizado com sucesso.');
-            Response::redirect('/usuarios');
+            Response::redirect('index.php?route=usuarios');
         } catch (\Throwable $e) {
             \App\Core\Logger::error('Falha ao atualizar usuário: ' . $e->getMessage());
             Flash::error('Erro ao atualizar usuário: ' . $e->getMessage());
@@ -307,13 +307,13 @@ class UsuarioController
 
         if (!Csrf::verify((string) Request::post('_csrf', ''))) {
             Flash::error('Token CSRF inválido.');
-            Response::redirect('/usuarios');
+            Response::redirect('index.php?route=usuarios');
         }
 
         $authId = Auth::id();
         if ($authId !== null && $authId === (int) $id) {
             Flash::error('Não é possível desativar o próprio usuário.');
-            Response::redirect('/usuarios');
+            Response::redirect('index.php?route=usuarios');
         }
 
         try {
@@ -323,7 +323,7 @@ class UsuarioController
             \App\Core\Logger::error('Falha ao desativar usuário: ' . $e->getMessage());
             Flash::error('Erro ao desativar usuário.');
         }
-        Response::redirect('/usuarios');
+        Response::redirect('index.php?route=usuarios');
     }
 
     /**
@@ -339,7 +339,7 @@ class UsuarioController
 
         if (!Csrf::verify((string) Request::post('_csrf', ''))) {
             Flash::error('Token CSRF inválido.');
-            Response::redirect('/usuarios');
+            Response::redirect('index.php?route=usuarios');
         }
 
         try {
@@ -349,7 +349,7 @@ class UsuarioController
             \App\Core\Logger::error('Falha ao ativar usuário: ' . $e->getMessage());
             Flash::error('Erro ao ativar usuário.');
         }
-        Response::redirect('/usuarios');
+        Response::redirect('index.php?route=usuarios');
     }
 
     /**
@@ -368,7 +368,7 @@ class UsuarioController
 
         if ($usuario === null) {
             Flash::error('Usuário não encontrado.');
-            Response::redirect('/login.php');
+            Response::redirect('login.php');
         }
 
         if (!Request::isPost()) {
@@ -382,7 +382,7 @@ class UsuarioController
 
         if (!Csrf::verify((string) Request::post('_csrf', ''))) {
             Flash::error('Token CSRF inválido.');
-            Response::redirect('/perfil');
+            Response::redirect('index.php?route=perfil');
         }
 
         $nome  = trim((string) Request::post('nome', ''));
@@ -448,7 +448,7 @@ class UsuarioController
         try {
             $usuarioModel->update((int) $usuario['id'], $data);
             Flash::success('Perfil atualizado com sucesso.');
-            Response::redirect('/perfil');
+            Response::redirect('index.php?route=perfil');
         } catch (\Throwable $e) {
             \App\Core\Logger::error('Falha ao atualizar perfil: ' . $e->getMessage());
             Flash::error('Erro ao atualizar perfil: ' . $e->getMessage());

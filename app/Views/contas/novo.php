@@ -8,14 +8,14 @@ $old = $old ?? [];
 <div class="container-fluid">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h1 class="h3 mb-0"><i class="bi bi-bank me-2 text-primary"></i><?= htmlspecialchars($pageTitle ?? 'Nova Conta', ENT_QUOTES, 'UTF-8') ?></h1>
-        <a href="/contas" class="btn btn-outline-secondary btn-sm">
+        <a href="index.php?route=contas" class="btn btn-outline-secondary btn-sm">
             <i class="bi bi-arrow-left"></i> Voltar
         </a>
     </div>
 
     <div class="card shadow-sm">
         <div class="card-body">
-            <form method="post" action="/contas" class="needs-validation" novalidate>
+            <form method="post" action="index.php?route=contas" class="needs-validation" novalidate>
                 <?= \App\Core\Csrf::field() ?>
 
                 <div class="row g-3">
@@ -92,7 +92,7 @@ $old = $old ?? [];
 
                 <hr>
                 <div class="d-flex justify-content-end gap-2">
-                    <a href="/contas" class="btn btn-outline-secondary">Cancelar</a>
+                    <a href="index.php?route=contas" class="btn btn-outline-secondary">Cancelar</a>
                     <button type="submit" class="btn btn-primary">
                         <i class="bi bi-save"></i> Salvar Conta
                     </button>

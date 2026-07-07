@@ -36,7 +36,7 @@ class AuthController
     public function login(): void
     {
         if (Auth::check()) {
-            Response::redirect('/dashboard');
+            Response::redirect('index.php?route=dashboard');
         }
 
         if (Request::isPost()) {
@@ -58,7 +58,7 @@ class AuthController
     {
         if (!Csrf::verify(Request::post('_csrf', ''))) {
             Flash::error('Token CSRF inválido. Recarregue a página e tente novamente.');
-            Response::redirect('/login');
+            Response::redirect('index.php?route=login');
         }
 
         $email    = Sanitizer::string(Request::post('email', ''));
@@ -73,7 +73,7 @@ class AuthController
 
         if (!$validator->validate()) {
             Flash::error('Informe email e senha válidos.');
-            Response::redirect('/login');
+            Response::redirect('index.php?route=login');
         }
 
         $tentativaModel = new LogTentativaLogin();
@@ -84,7 +84,7 @@ class AuthController
             $tentativaModel->registrar($email, $ip, 0);
             Flash::error('Muitas tentativas inválidas. Aguarde '
                 . self::BLOQUEIO_MINUTOS . ' minutos e tente novamente.');
-            Response::redirect('/login');
+            Response::redirect('index.php?route=login');
         }
 
         $usuarioModel = new Usuario();
@@ -97,7 +97,7 @@ class AuthController
                 Flash::error('Usuário bloqueado até '
                     . date('d/m/Y H:i', strtotime($usuario['bloqueado_ate']))
                     . '. Tente mais tarde.');
-                Response::redirect('/login');
+                Response::redirect('index.php?route=login');
             }
             $credenciaisValidas = password_verify($senha, $usuario['senha_hash']);
         }
@@ -109,13 +109,13 @@ class AuthController
                 $usuarioModel->bloquear($usuario['id'], self::BLOQUEIO_MINUTOS);
             }
             Flash::error('Credenciais inválidas.');
-            Response::redirect('/login');
+            Response::redirect('index.php?route=login');
         }
 
         if ((int) $usuario['ativo'] !== 1) {
             $tentativaModel->registrar($email, $ip, 0);
             Flash::error('Usuário desativado. Contate o administrador.');
-            Response::redirect('/login');
+            Response::redirect('index.php?route=login');
         }
 
         $tentativaModel->registrar($email, $ip, 1);
@@ -125,7 +125,7 @@ class AuthController
         Auth::login($usuario);
 
         Flash::success('Bem-vindo(a), ' . $usuario['nome'] . '!');
-        Response::redirect('/dashboard');
+        Response::redirect('index.php?route=dashboard');
     }
 
     /**
@@ -137,7 +137,7 @@ class AuthController
             Auth::logout();
             Flash::success('Logout realizado com sucesso.');
         }
-        Response::redirect('/login');
+        Response::redirect('index.php?route=login');
     }
 
     /**

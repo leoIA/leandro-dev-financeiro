@@ -7,14 +7,14 @@ $old = $old ?? [];
 <div class="container-fluid">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h1 class="h3 mb-0"><?= htmlspecialchars($pageTitle ?? 'Novo Cliente / Fornecedor', ENT_QUOTES, 'UTF-8') ?></h1>
-        <a href="/clientes-fornecedores" class="btn btn-outline-secondary btn-sm">
+        <a href="index.php?route=clientes-fornecedores" class="btn btn-outline-secondary btn-sm">
             <i class="bi bi-arrow-left"></i> Voltar
         </a>
     </div>
 
     <div class="card shadow-sm">
         <div class="card-body">
-            <form method="post" action="/clientes-fornecedores" class="needs-validation" novalidate>
+            <form method="post" action="index.php?route=clientes-fornecedores" class="needs-validation" novalidate>
                 <?= App\Core\Csrf::field() ?>
 
                 <div class="row g-3">
@@ -157,7 +157,7 @@ $old = $old ?? [];
 
                 <hr>
                 <div class="d-flex justify-content-end gap-2">
-                    <a href="/clientes-fornecedores" class="btn btn-outline-secondary">Cancelar</a>
+                    <a href="index.php?route=clientes-fornecedores" class="btn btn-outline-secondary">Cancelar</a>
                     <button type="submit" class="btn btn-primary">
                         <i class="bi bi-save"></i> Salvar
                     </button>
@@ -167,7 +167,7 @@ $old = $old ?? [];
     </div>
 </div>
 
-<script src="/public/js/viacep.js"></script>
+<script src="public/js/viacep.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const radios = document.querySelectorAll('input[name="tipo_pessoa"]');

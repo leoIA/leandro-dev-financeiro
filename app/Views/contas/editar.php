@@ -19,10 +19,10 @@ $saldoInicialOriginal = (float)($conta['saldo_inicial'] ?? 0);
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h1 class="h3 mb-0"><i class="bi bi-bank me-2 text-primary"></i><?= htmlspecialchars($pageTitle ?? 'Editar Conta', ENT_QUOTES, 'UTF-8') ?></h1>
         <div class="btn-toolbar gap-2">
-            <a href="/contas/<?= (int)($conta['id'] ?? 0) ?>/extrato" class="btn btn-outline-info btn-sm">
+            <a href="index.php?route=contas/<?= (int)($conta['id'] ?? 0) ?>/extrato" class="btn btn-outline-info btn-sm">
                 <i class="bi bi-list-ul"></i> Ver Extrato
             </a>
-            <a href="/contas" class="btn btn-outline-secondary btn-sm">
+            <a href="index.php?route=contas" class="btn btn-outline-secondary btn-sm">
                 <i class="bi bi-arrow-left"></i> Voltar
             </a>
         </div>
@@ -30,7 +30,7 @@ $saldoInicialOriginal = (float)($conta['saldo_inicial'] ?? 0);
 
     <div class="card shadow-sm">
         <div class="card-body">
-            <form method="post" action="/contas/<?= (int)($conta['id'] ?? 0) ?>" class="needs-validation" novalidate>
+            <form method="post" action="index.php?route=contas/<?= (int)($conta['id'] ?? 0) ?>" class="needs-validation" novalidate>
                 <?= \App\Core\Csrf::field() ?>
                 <input type="hidden" name="_method" value="PUT">
                 <input type="hidden" name="saldo_inicial" value="<?= htmlspecialchars((string)$saldoInicialOriginal, ENT_QUOTES, 'UTF-8') ?>">
@@ -108,7 +108,7 @@ $saldoInicialOriginal = (float)($conta['saldo_inicial'] ?? 0);
 
                 <hr>
                 <div class="d-flex justify-content-end gap-2">
-                    <a href="/contas" class="btn btn-outline-secondary">Cancelar</a>
+                    <a href="index.php?route=contas" class="btn btn-outline-secondary">Cancelar</a>
                     <button type="submit" class="btn btn-primary">
                         <i class="bi bi-save"></i> Salvar Alterações
                     </button>

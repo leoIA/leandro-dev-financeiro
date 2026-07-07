@@ -54,7 +54,7 @@ $tipoBadge = [
             <i class="bi bi-diagram-3 me-2 text-primary"></i>
             <?= htmlspecialchars($pageTitle ?? 'Editar Conta', ENT_QUOTES, 'UTF-8') ?>
         </h1>
-        <a href="/plano-contas" class="btn btn-outline-secondary btn-sm">
+        <a href="index.php?route=plano-contas" class="btn btn-outline-secondary btn-sm">
             <i class="bi bi-arrow-left"></i> Voltar
         </a>
     </div>
@@ -68,7 +68,7 @@ $tipoBadge = [
                 </div>
             <?php endif; ?>
 
-            <form method="post" action="/plano-contas/<?= (int)($conta['id'] ?? 0) ?>" class="needs-validation" novalidate>
+            <form method="post" action="index.php?route=plano-contas/<?= (int)($conta['id'] ?? 0) ?>" class="needs-validation" novalidate>
                 <?= \App\Core\Csrf::field() ?>
                 <input type="hidden" name="_method" value="PUT">
 
@@ -124,7 +124,7 @@ $tipoBadge = [
 
                 <hr>
                 <div class="d-flex justify-content-end gap-2">
-                    <a href="/plano-contas" class="btn btn-outline-secondary">Cancelar</a>
+                    <a href="index.php?route=plano-contas" class="btn btn-outline-secondary">Cancelar</a>
                     <button type="submit" class="btn btn-primary">
                         <i class="bi bi-save"></i> Salvar Alterações
                     </button>

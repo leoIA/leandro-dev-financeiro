@@ -46,7 +46,7 @@ $saldoClass = $saldoAtual > 0 ? 'text-success' : ($saldoAtual < 0 ? 'text-danger
             <button type="button" class="btn btn-outline-primary btn-sm" onclick="window.print()">
                 <i class="bi bi-printer"></i> Imprimir
             </button>
-            <a href="/contas" class="btn btn-outline-secondary btn-sm">
+            <a href="index.php?route=contas" class="btn btn-outline-secondary btn-sm">
                 <i class="bi bi-arrow-left"></i> Voltar
             </a>
         </div>
@@ -67,7 +67,7 @@ $saldoClass = $saldoAtual > 0 ? 'text-success' : ($saldoAtual < 0 ? 'text-danger
 
     <div class="card shadow-sm mb-3 no-print">
         <div class="card-body">
-            <form method="get" action="/contas/<?= (int)($conta['id'] ?? 0) ?>/extrato" class="row g-2 align-items-end">
+            <form method="get" action="index.php?route=contas/<?= (int)($conta['id'] ?? 0) ?>/extrato" class="row g-2 align-items-end">
                 <div class="col-md-3">
                     <label for="data_inicio" class="form-label">Data Início</label>
                     <input type="date" class="form-control form-control-sm" id="data_inicio" name="data_inicio" required
@@ -82,7 +82,7 @@ $saldoClass = $saldoAtual > 0 ? 'text-success' : ($saldoAtual < 0 ? 'text-danger
                     <button type="submit" class="btn btn-outline-primary btn-sm flex-grow-1">
                         <i class="bi bi-funnel"></i> Filtrar
                     </button>
-                    <a href="/contas/<?= (int)($conta['id'] ?? 0) ?>/extrato" class="btn btn-outline-secondary btn-sm">
+                    <a href="index.php?route=contas/<?= (int)($conta['id'] ?? 0) ?>/extrato" class="btn btn-outline-secondary btn-sm">
                         <i class="bi bi-x-lg"></i> Limpar
                     </a>
                 </div>
