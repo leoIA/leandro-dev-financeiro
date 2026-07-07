@@ -1,0 +1,26 @@
+# Leandro DEV Financeiro — MM Construtora
+# .htaccess — Rewrite rules + segurança
+Options -Indexes
+RewriteEngine On
+
+# Security headers
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set X-XSS-Protection "1; mode=block"
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# Bloquear acesso direto a arquivos sensíveis
+RewriteRule ^app/ - [F,L]
+RewriteRule ^storage/ - [F,L]
+RewriteRule ^config\.php$ - [F,L]
+RewriteRule ^config\.example\.php$ - [F,L]
+RewriteRule ^db\.sql$ - [F,L]
+RewriteRule ^README\.md$ - [F,L]
+RewriteRule ^\.htaccess$ - [F,L]
+
+# Front controller — tudo passa por index.php
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php [QSA,L]
